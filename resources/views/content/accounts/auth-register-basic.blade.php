@@ -45,14 +45,14 @@
               <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="ri-more-2-line"></i></button>
               <div class="dropdown-menu">
                 <a class="dropdown-item Edit" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#EditAccount"
-                data-id="{{ $user->id}}"
+                data-id="{{ Crypt::encryptString($user->id) }}"
                 data-firstname="{{ $user->firstname}}"
                 data-middlename="{{ $user->middlename}}"
                 data-lastname="{{ $user->lastname}}"
                 data-username="{{ $user->username}}"
                 data-email="{{ $user->email}}"
                 ><i class="ri-pencil-line me-1"></i> Edit</a>
-                <a class="dropdown-item DeleteBtn" data-id="{{ $user->id }}" href="javascript:void(0);"><i class="ri-delete-bin-6-line me-1"></i> Delete</a>
+                <a class="dropdown-item DeleteBtn" data-id="{{ Crypt::encryptString($user->id) }}" href="javascript:void(0);"><i class="ri-delete-bin-6-line me-1"></i> Delete</a>
               </div>
             </div>
           </td>

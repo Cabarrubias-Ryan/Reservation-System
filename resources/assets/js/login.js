@@ -12,14 +12,45 @@ $(document).ready(function () {
       success: function (data) {
         $('.preloader').hide();
         if (data.Error == 1) {
-          Swal.fire('Error!', data.Message, 'error');
+          Toastify({
+            text: data.Message,
+            duration: 3000,
+            close: true,
+            gravity: 'top', // top or bottom
+            position: 'right', // left, center or right
+            backgroundColor: '#dc3545',
+            stopOnFocus: true
+          }).showToast();
         } else if (data.Error == 0) {
           window.location.href = data.Redirect;
         }
       },
-      error: function () {
+      error: function (xhr) {
         $('.preloader').hide();
-        Swal.fire('Error!', 'Something went wrong, please try again.', 'error');
+        if (xhr.status === 429) {
+          let errorMessage = xhr.responseJSON.Message || 'Too many login attempts. Please try again later.';
+          Toastify({
+            text: errorMessage,
+            duration: 3000,
+            close: true,
+            gravity: 'top', // top or bottom
+            position: 'right', // left, center or right
+            backgroundColor: '#cc3300',
+            stopOnFocus: true
+          }).showToast();
+        } else {
+          // Handle other errors (invalid credentials, etc.)
+          let errorMessage = xhr.responseJSON.Message || 'An unexpected error occurred.';
+          Toastify({
+            text: errorMessage,
+            duration: 3000,
+            close: true,
+            gravity: 'top', // top or bottom
+            position: 'right', // left, center or right
+            backgroundColor: '#cc3300',
+            stopOnFocus: true
+          }).showToast();
+        }
       }
     });
   });

@@ -7,3 +7,5 @@ import.meta.glob([
   // '../assets/json/**',
   '../assets/vendor/fonts/**'
 ]);
+import Toastify from 'toastify-js';
+import 'toastify-js/src/toastify.css';

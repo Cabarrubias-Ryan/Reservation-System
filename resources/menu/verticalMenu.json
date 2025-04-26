@@ -23,6 +23,12 @@
       "slug": "auth-register-basic"
     },
     {
+      "url": "admin/reservation",
+      "name": "Reservation",
+      "icon": "menu-icon tf-icons ri-booklet-line",
+      "slug": "admin-reservation"
+    },
+    {
       "name": "Layouts",
       "icon": "menu-icon tf-icons ri-layout-2-line",
       "slug": "layouts",

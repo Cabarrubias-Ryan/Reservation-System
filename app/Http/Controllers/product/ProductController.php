@@ -8,6 +8,7 @@ use App\Models\Venue;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
@@ -76,7 +77,7 @@ class ProductController extends Controller
       'deleted_at' => now()
     ];
 
-    $resultvenue = Venue::where('id', $request->id)->update($venue);
+    $resultvenue = Venue::where('id', Crypt::decryptString($request->id))->update($venue);
 
     if($resultvenue){
       return response()->json(['Error' => 0, 'Message' => 'Successfully delete a data']);

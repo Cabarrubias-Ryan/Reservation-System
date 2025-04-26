@@ -65,14 +65,20 @@
           <div class="mb-5">
             <button class="btn btn-primary d-grid w-100" type="submit" id="loginBtn">login</button>
           </div>
+          <p class="text-center">
+            <span>New on our platform?</span>
+            <a href="{{url('auth/register-user')}}">
+              <span>Create an account</span>
+            </a>
+          </p>
           <div class="text-center mt-3">
             <span>Or Sign with</span>
           </div>
           <div class="d-flex justify-content-center mt-3 gap-3">
-              <a href="" class="btn btn-primary border rounded-circle d-flex justify-content-center align-items-center" style="width: 50px; height: 50px;">
+              <a href="{{ route('auth.provider.redirect','google') }}" target="_blank" class="btn btn-primary border rounded-circle d-flex justify-content-center align-items-center" style="width: 50px; height: 50px;">
                 <i class="ri-google-line"></i>
               </a>
-              <a href="" class="btn btn-danger border rounded-circle d-flex justify-content-center align-items-center" style="width: 50px; height: 50px;">
+              <a href="{{ route('auth.provider.redirect','facebook') }}" class="btn btn-danger border rounded-circle d-flex justify-content-center align-items-center" style="width: 50px; height: 50px;">
                 <i class="ri-facebook-fill"></i>
               </a>
           </div>

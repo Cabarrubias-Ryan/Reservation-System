@@ -4,12 +4,12 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\icons\RiIcons;
 use App\Http\Controllers\layouts\Blank;
 use App\Http\Controllers\layouts\Fluid;
-use App\Http\Controllers\MenuController;
 use App\Http\Controllers\cards\CardBasic;
 use App\Http\Controllers\pages\MiscError;
 use App\Http\Controllers\layouts\Container;
 use App\Http\Controllers\dashboard\Analytics;
 use App\Http\Controllers\layouts\WithoutMenu;
+use App\Http\Controllers\menu\MenuController;
 use App\Http\Controllers\layouts\WithoutNavbar;
 use App\Http\Controllers\user_interface\Alerts;
 use App\Http\Controllers\user_interface\Badges;
@@ -37,16 +37,18 @@ use App\Http\Controllers\authentications\LoginBasic;
 use App\Http\Controllers\pages\MiscUnderMaintenance;
 use App\Http\Controllers\form_layouts\HorizontalForm;
 use App\Http\Controllers\tables\Basic as TablesBasic;
+use App\Http\Controllers\authentications\RegisterUser;
 use App\Http\Controllers\extended_ui\PerfectScrollbar;
 use App\Http\Controllers\pages\AccountSettingsAccount;
 use App\Http\Controllers\authentications\RegisterBasic;
 use App\Http\Controllers\user_interface\TooltipsPopovers;
 use App\Http\Controllers\pages\AccountSettingsConnections;
-use App\Http\Controllers\pages\AccountSettingsNotifications;
 
 
 
 // New import Controller
+use App\Http\Controllers\reservation\ReservationController;
+use App\Http\Controllers\pages\AccountSettingsNotifications;
 use App\Http\Controllers\authentications\ForgotPasswordBasic;
 use App\Http\Controllers\user_interface\PaginationBreadcrumbs;
 
@@ -54,20 +56,28 @@ use App\Http\Controllers\user_interface\PaginationBreadcrumbs;
 
 // New created Routes
 
+
+
 Route::get('/', [MenuController::class, 'index'])->name('home');
-
-
-Route::middleware(['guest'])->group(function () {
-  Route::get('login', [LoginBasic::class, 'index'])->name('login');
-  Route::post('login/process', [LoginBasic::class, 'login'])->name('auth-login-process');
-  Route::get('/auth/forgot-password-basic', [ForgotPasswordBasic::class, 'index'])->name('auth-reset-password-basic');
-
-});
+Route::get('/logout', [LoginBasic::class, 'logoutAccount'])->name('logout-process')->middleware(['auth']);
 
 
 Route::middleware(['auth'])->group(function () {
-  Route::get('logout', [LoginBasic::class, 'logoutAccount'])->name('logout-process');
+  Route::get('/venue/details/{id}', [MenuController::class, 'viewDetails'])->name('details');
+});
 
+Route::middleware(['guest'])->group(function () {
+  Route::get('/login', [LoginBasic::class, 'index'])->name('login');
+  Route::post('/login/process', [LoginBasic::class, 'login'])->name('auth-login-process')->middleware(['throttle:login']);
+  Route::get('/auth/forgot-password-basic', [ForgotPasswordBasic::class, 'index'])->name('auth-reset-password-basic');
+  Route::get('/auth/register-user', [RegisterUser::class, 'index'])->name('auth-register-user');
+  Route::post('/auth/register-user/add', [RegisterUser::class, 'store'])->name('auth-register-user-add');
+
+  Route::get('/auth/{provider}/redirect', [LoginBasic::class, 'redirect'])->name('auth.provider.redirect');
+  Route::get('/auth/{provider}/callback', [LoginBasic::class, 'callback'])->name('auth.provider.callback');
+});
+
+Route::middleware(['auth', 'user-access:Admin'])->group(function () {
   Route::get('admin/product', [ProductController::class, 'index'])->name('admin-product');
   Route::post('admin/product/add', [ProductController::class, 'store'])->name('admin-product-add');
   Route::post('admin/product/update', [ProductController::class, 'update'])->name('admin-product-update');
@@ -81,6 +91,9 @@ Route::middleware(['auth'])->group(function () {
   Route::post('/auth/register-basic/update', [RegisterBasic::class, 'update'])->name('auth-register-basic-update');
   Route::post('/auth/register-basic/delete', [RegisterBasic::class, 'delete'])->name('auth-register-basic-delete');
   Route::post('/auth/register-basic/search', [RegisterBasic::class, 'search'])->name('auth-register-basic-search');
+
+  Route::get('/admin/reservation', [ReservationController::class, 'index'])->name('admin-reservation');
+
 });
 
 

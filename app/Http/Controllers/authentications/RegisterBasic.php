@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 
 class RegisterBasic extends Controller
 {
@@ -67,7 +68,7 @@ class RegisterBasic extends Controller
       'email' => $request->email,
     ];
 
-    $resultUser = User::where('id', $request->id)->update($userData);
+    $resultUser = User::where('id', Crypt::decryptString($request->id))->update($userData);
 
     if($resultUser){
       return response()->json(['Error' => 0, 'Message' => 'Successfully update a data']);
@@ -89,7 +90,7 @@ class RegisterBasic extends Controller
       'deleted_at' => now()
     ];
 
-    $resultUser = User::where('id', $request->id)->update($userData);
+    $resultUser = User::where('id', Crypt::decryptString($request->id))->update($userData);
 
     if($resultUser){
       return response()->json(['Error' => 0, 'Message' => 'Successfully delete a data']);

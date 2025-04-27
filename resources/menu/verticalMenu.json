@@ -4,11 +4,7 @@
       "url": "admin/analytics",
       "name": "Dashboards",
       "icon": "menu-icon tf-icons ri-home-smile-line",
-      "slug": "dashboard-analytics",
-      "badge": [
-        "danger",
-        "5"
-      ]
+      "slug": "dashboard-analytics"
     },
     {
       "url": "admin/product",
@@ -26,7 +22,11 @@
       "url": "admin/reservation",
       "name": "Reservation",
       "icon": "menu-icon tf-icons ri-booklet-line",
-      "slug": "admin-reservation"
+      "slug": "admin-reservation",
+      "badge": [
+        "danger",
+        "5"
+      ]
     },
     {
       "name": "Layouts",

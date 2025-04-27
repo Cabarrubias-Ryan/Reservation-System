@@ -78,13 +78,70 @@ class ProductController extends Controller
     ];
 
     $resultvenue = Venue::where('id', Crypt::decryptString($request->id))->update($venue);
+    $venueImages = Photo::where('venues_id', Crypt::decryptString($request->id))->get();
+    foreach ($venueImages as $image) {
+        $filePath = str_replace('storage/', 'public/', $image->path);
+        Storage::delete($filePath);
+    }
+    Photo::where('venues_id', Crypt::decryptString($request->id))->delete();
 
     if($resultvenue){
       return response()->json(['Error' => 0, 'Message' => 'Successfully delete a data']);
     }
   }
   public function update(Request $request){
-    return response()->json(['Error' => 0, 'Message' => 'Successfully update a data']);
+
+    if ($request->has('removed_images')) {
+
+        foreach ($request->removed_images as $image) {
+            if (!empty($image)) {
+              $filePath = str_replace('storage/', 'public/', $image);
+              Storage::delete($filePath);
+              Photo::where('path', $image)->delete();
+            }
+        }
+    }
+
+
+    $logData = [
+      'users_id' => Auth::id(),
+      'action' => 'Update',
+      'tablename' => 'Venues',
+      'description' => 'Update the venue',
+      'ip_address' => '127.0.0.1:8000',
+      'created_at' => now(),
+    ];
+
+    $resultLogs = Log::create($logData);
+
+    $venue = [
+        'name' => $request->name,
+        'description' => $request->description,
+        'price' => $request->price,
+        'category' => $request->category,
+        'created_at' => now(),
+        'updated_at' => now(),
+        'logs_id' => $resultLogs->id
+    ];
+
+    if ($request->hasFile('imagesData')) {
+      foreach ($request->file('imagesData') as $image) {
+          $path = $image->store('public/uploads');
+            Photo::create([
+                'v_code' => $request->code,
+                'path' => Storage::url($path),
+                'created_at' => now(),
+                'updated_at' => now(),
+                'venues_id' => Crypt::decryptString($request->id),
+            ]);
+        }
+    }
+    $resultUser = Venue::where('id', Crypt::decryptString($request->id))->update($venue);
+
+
+    if($resultUser){
+      return response()->json(['Error' => 0, 'Message' => 'Successfully update a data']);
+    }
   }
   public function filter(Request $request){
     return response()->json(['Error' => 0, 'Message' => 'Successfully added a data']);

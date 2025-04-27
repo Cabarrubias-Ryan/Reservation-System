@@ -75,7 +75,7 @@
             <span>Or Sign with</span>
           </div>
           <div class="d-flex justify-content-center mt-3 gap-3">
-              <a href="{{ route('auth.provider.redirect','google') }}" target="_blank" class="btn btn-primary border rounded-circle d-flex justify-content-center align-items-center" style="width: 50px; height: 50px;">
+              <a href="{{ route('auth.provider.redirect','google') }}" class="btn btn-primary border rounded-circle d-flex justify-content-center align-items-center" style="width: 50px; height: 50px;">
                 <i class="ri-google-line"></i>
               </a>
               <a href="{{ route('auth.provider.redirect','facebook') }}" class="btn btn-danger border rounded-circle d-flex justify-content-center align-items-center" style="width: 50px; height: 50px;">

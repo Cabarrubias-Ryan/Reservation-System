@@ -86,6 +86,13 @@
                         <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="ri-more-2-line"></i></button>
                         <div class="dropdown-menu">
                           <a class="dropdown-item Edit" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#EditProduct"
+                          data-id="{{ Crypt::encryptString($venue->id) }}"
+                          data-name="{{ $venue->name }}"
+                          data-price="{{ $venue->price }}"
+                          data-category="{{ $venue->category }}"
+                          data-description="{{ $venue->description }}"
+                          data-images="{{ implode(',', $venue->picture->pluck('path')->toArray()) }}"
+                          data-code="{{ $venue->picture->pluck('v_code')->first() }}"
                           ><i class="ri-pencil-line me-1"></i> Edit</a>
                           <a class="dropdown-item DeleteBtn" data-id="{{ Crypt::encryptString($venue->id) }}" href="javascript:void(0);"><i class="ri-delete-bin-6-line me-1"></i> Delete</a>
                         </div>
@@ -142,6 +149,13 @@
                         <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="ri-more-2-line"></i></button>
                         <div class="dropdown-menu">
                           <a class="dropdown-item Edit" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#EditProduct"
+                          data-id="{{ Crypt::encryptString($venue->id) }}"
+                          data-name="{{ $venue->name }}"
+                          data-price="{{ $venue->price }}"
+                          data-category="{{ $venue->category }}"
+                          data-description="{{ $venue->description }}"
+                          data-images="{{ implode(',', $venue->picture->pluck('path')->toArray()) }}"
+                          data-code="{{ $venue->picture->pluck('v_code')->first() }}"
                           ><i class="ri-pencil-line me-1"></i> Edit</a>
                           <a class="dropdown-item DeleteBtn" data-id="{{ Crypt::encryptString($venue->id) }}" href="javascript:void(0);"><i class="ri-delete-bin-6-line me-1"></i> Delete</a>
                         </div>
@@ -198,6 +212,13 @@
                         <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="ri-more-2-line"></i></button>
                         <div class="dropdown-menu">
                           <a class="dropdown-item Edit" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#EditProduct"
+                          data-id="{{ Crypt::encryptString($venue->id) }}"
+                          data-name="{{ $venue->name }}"
+                          data-price="{{ $venue->price }}"
+                          data-category="{{ $venue->category }}"
+                          data-description="{{ $venue->description }}"
+                          data-images="{{ implode(',', $venue->picture->pluck('path')->toArray()) }}"
+                          data-code="{{ $venue->picture->pluck('v_code')->first() }}"
                           ><i class="ri-pencil-line me-1"></i> Edit</a>
                           <a class="dropdown-item DeleteBtn" data-id="{{ Crypt::encryptString($venue->id) }}" href="javascript:void(0);"><i class="ri-delete-bin-6-line me-1"></i> Delete</a>
                         </div>
@@ -340,13 +361,20 @@
       <div class="modal-body">
         <form id="ProductDataUpdate" enctype="multipart/form-data">
           @csrf
+          <input type="hidden" id="Edit_id" name="id" class="form-control" placeholder="Id">
+          <input type="hidden" name="removed_images[]" id="removed_images" multiple accept="image/*">
+          <div class="row">
+            <div class="col mb-3" id="Edit_ImagePreview" style="display: flex; flex-wrap: wrap; gap: 10px;">
+              <!-- Images will appear here -->
+            </div>
+          </div>
           <div class="row">
             <div class="col mb-3">
               <div class="input-group">
                 <input type="file" name="imagesData[]" multiple accept="image/*" class="form-control" id="Edit_DataImages">
               </div>
             </div>
-          </div>
+        </div>
           <div class="row">
             <div class="col mb-3 mt-2">
               <div class="form-floating form-floating-outline">

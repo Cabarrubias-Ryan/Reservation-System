@@ -118,11 +118,50 @@ $(document).ready(function () {
     });
   });
 });
+
+// retrieve a data
+$(document).ready(function () {
+  $('body').on('click', '.Edit', function () {
+    const id = $(this).data('id');
+    const images = $(this).data('images');
+    const name = $(this).data('name');
+    const price = $(this).data('price');
+    const code = $(this).data('code');
+    const category = $(this).data('category');
+    const description = $(this).data('description');
+    const imageArray = images.split(',');
+
+    $('#Edit_id').val(id);
+    $('#Edit_name').val(name);
+    $('#Edit_price').val(price);
+    $('#Edit_code').val(code);
+    $('#Edit_category').val(category);
+    $('#Edit_description').val(description);
+
+    $('#Edit_ImagePreview').empty();
+
+    imageArray.forEach(function (image, index) {
+      $('#Edit_ImagePreview').append(`
+        <div class="position-relative" style="width: 100px; height: 100px;">
+          <img src="${image}" class="img-thumbnail" style="width: 100%; height: 100%; object-fit: cover;">
+          <button type="button" class="btn btn-sm btn-danger position-absolute top-0 end-0 remove-image" data-image="${image}" style="padding:2px 6px; font-size:12px;">&times;</button>
+        </div>
+      `);
+    });
+  });
+  $('body').on('click', '.remove-image', function () {
+    $(this).parent().remove(); // remove the image box from preview
+
+    // Optionally: you can also track the removed images to delete in the backend
+    let removedImages = $('#removed_images').val() ? $('#removed_images').val().split(',') : [];
+    removedImages.push($(this).data('image'));
+    $('#removed_images').val(removedImages.join(','));
+  });
+});
 // update
 $(document).ready(function () {
   $('body').on('click', '#UpdateProduct', function () {
     const fields = [
-      { id: 'Edit_DataImages', label: 'Images' },
       { id: 'Edit_name', label: 'Name' },
       { id: 'Edit_price', label: 'Price' },
       { id: 'Edit_code', label: 'Code' },
@@ -137,7 +176,7 @@ $(document).ready(function () {
       return;
     }
     var formData = new FormData($('#ProductDataUpdate')[0]);
-
+    console.log(formData);
     $.ajax({
       type: 'POST',
       url: '/admin/product/update',

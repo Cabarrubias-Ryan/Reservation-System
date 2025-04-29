@@ -1,6 +1,6 @@
 <header class="border-bottom shadow-sm">
   <nav class="navbar navbar-example navbar-expand-lg bg-lightgray border-bottom-0">
-    <div class="container-fluid">
+    <div class="container py-2">
       <div class="app-brand justify-content-center">
         <a href="{{url('/')}}" class="app-brand-link gap-3">
           <span class="app-brand-logo demo">@include('_partials.macros',["height"=>30])</span>

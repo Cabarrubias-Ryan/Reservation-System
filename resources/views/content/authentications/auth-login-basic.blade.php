@@ -16,7 +16,7 @@
 <div class="position-relative">
   <div class="authentication-wrapper authentication-basic container-p-y">
     <div class="authentication-inner py-6 mx-4">
-
+      <a href="{{ route('home')}}" class="position-absolute top-0 start-0 m-3 z-1">Back</a>
       <!-- Login -->
       <div class="card p-7">
         <!-- Logo -->

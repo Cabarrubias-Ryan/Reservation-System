@@ -26,7 +26,7 @@ class RegisterBasic extends Controller
       'action' => 'Add',
       'tablename' => 'Users',
       'description' => 'Added a admin user that name '.$request->firstname.' '.$request->lastname,
-      'ip_address' => '127.0.0.1:8000',
+      'ip_address' => request()->ip(),
       'created_at' => now(),
     ];
 
@@ -55,7 +55,7 @@ class RegisterBasic extends Controller
       'action' => 'Update',
       'tablename' => 'Users',
       'description' => 'Update the account',
-      'ip_address' => '127.0.0.1:8000',
+      'ip_address' => request()->ip(),
       'created_at' => now(),
     ];
 
@@ -81,7 +81,7 @@ class RegisterBasic extends Controller
       'action' => 'Delete',
       'tablename' => 'Users',
       'description' => 'Delete a account',
-      'ip_address' => '127.0.0.1:8000',
+      'ip_address' => request()->ip(),
       'created_at' => now(),
     ];
 

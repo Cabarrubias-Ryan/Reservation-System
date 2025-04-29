@@ -1,3 +1,56 @@
+// error trapping
+function validateForm(fields) {
+  let valid = true;
+
+  // Loop through all fields to check if any are empty
+  fields.forEach(field => {
+    const input = document.getElementById(field.id);
+    const value = input.value.trim();
+    const errorMessages = [];
+
+    // Check for empty fields
+    if (!value) {
+      valid = false;
+      errorMessages.push(`${field.label} is required.`);
+    }
+
+    if (errorMessages.length > 0) {
+      input.classList.add('is-invalid'); // Add Bootstrap 'is-invalid' class
+      let errorMessageContainer = input.parentNode.querySelector('.invalid-feedback');
+      if (!errorMessageContainer) {
+        errorMessageContainer = document.createElement('div');
+        errorMessageContainer.classList.add('invalid-feedback');
+        input.parentNode.appendChild(errorMessageContainer);
+      }
+      errorMessageContainer.innerHTML = errorMessages.join('<br>'); // Display all errors for this field
+    } else {
+      input.classList.remove('is-invalid'); // Remove 'is-invalid' class if valid
+      let errorMessageContainer = input.parentNode.querySelector('.invalid-feedback');
+      if (errorMessageContainer) {
+        errorMessageContainer.remove(); // Remove error messages
+      }
+    }
+  });
+
+  return valid;
+}
+
+$(document).ready(function () {
+  $('#reservationBtn').on('click', function (event) {
+    const date = [
+      { id: 'checkin-date', label: 'Check in' },
+      { id: 'checkout-date', label: 'Check out' }
+    ];
+
+    const isValid = validateForm(date);
+
+    if (!isValid) {
+      event.preventDefault();
+      return;
+    }
+  });
+});
+
 $(document).ready(function () {
   $('body').on('click', '#loginBtn', function () {
     const data = [
@@ -32,11 +85,7 @@ $(document).ready(function () {
       cache: false,
       data: $('#formAuthentication').serialize(),
       dataType: 'json',
-      beforeSend: function () {
-        $('.preloader').show();
-      },
       success: function (data) {
-        $('.preloader').hide();
         if (data.Error == 1) {
           Toastify({
             text: data.Message,
@@ -52,7 +101,6 @@ $(document).ready(function () {
         }
       },
       error: function (xhr) {
-        $('.preloader').hide();
         if (xhr.status === 429) {
           let errorMessage = xhr.responseJSON.Message || 'Too many login attempts. Please try again later.';
           Toastify({

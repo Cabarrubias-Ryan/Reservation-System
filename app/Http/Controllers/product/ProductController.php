@@ -29,7 +29,7 @@ class ProductController extends Controller
       'action' => 'Add',
       'tablename' => 'Venues',
       'description' => 'Added a venue',
-      'ip_address' => '127.0.0.1:8000',
+      'ip_address' => request()->ip(),
       'created_at' => now(),
     ];
 
@@ -67,7 +67,7 @@ class ProductController extends Controller
       'action' => 'Delete',
       'tablename' => 'Venues',
       'description' => 'Delete a venue',
-      'ip_address' => '127.0.0.1:8000',
+      'ip_address' => request()->ip(),
       'created_at' => now(),
     ];
 
@@ -108,7 +108,7 @@ class ProductController extends Controller
       'action' => 'Update',
       'tablename' => 'Venues',
       'description' => 'Update the venue',
-      'ip_address' => '127.0.0.1:8000',
+      'ip_address' => request()->ip(),
       'created_at' => now(),
     ];
 

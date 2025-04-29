@@ -53,7 +53,7 @@ class LoginBasic extends Controller
       'action' => 'Logout',
       'tablename' => 'Users',
       'description' => $account->firstname.' '.$account->lastname .' is Successfully logout',
-      'ip_address' => '127.0.0.1:8000',
+      'ip_address' => request()->ip(),
       'created_at' => now(),
     ];
 

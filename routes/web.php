@@ -60,10 +60,11 @@ use App\Http\Controllers\user_interface\PaginationBreadcrumbs;
 
 Route::get('/', [MenuController::class, 'index'])->name('home');
 Route::get('/logout', [LoginBasic::class, 'logoutAccount'])->name('logout-process')->middleware(['auth']);
-
+Route::get('/venue/details/{id}', [MenuController::class, 'viewDetails'])->name('details');
+Route::post('/venue/search', [MenuController::class, 'search'])->name('search');
 
 Route::middleware(['auth'])->group(function () {
-  Route::get('/venue/details/{id}', [MenuController::class, 'viewDetails'])->name('details');
+
 });
 
 Route::middleware(['guest'])->group(function () {

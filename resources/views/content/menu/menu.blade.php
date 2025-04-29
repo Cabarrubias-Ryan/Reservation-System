@@ -2,21 +2,22 @@
 
 @section('title', 'Home')
 
-@section('page-script')
-@vite('resources/assets/js/productmenu.js')
-@endsection
-
 @section('page-style')
 @vite([
   'resources/assets/vendor/scss/pages/page-auth.scss'
 ])
 @endsection
 
+@section('page-script')
+@vite('resources/assets/js/menus.js')
+@endsection
+
 @section('content')
+@include('layouts/sections/navbar/usernavbar')
 <div class="container-fluid">
   <div class="position-relative">
     <div class="container p-5">
-      @include('layouts/sections/navbar/usernavbar')
+
       <nav aria-label="breadcrumb" class="mt-5">
         <ol class="breadcrumb breadcrumb-style2">
           <li class="breadcrumb-item">
@@ -30,7 +31,15 @@
             <div class="navbar-nav align-items-start">
               <div class="nav-item d-flex align-items-center">
                 <i class="ri-search-line ri-22px me-1_5"></i>
-                <input type="text" class="form-control border-0 shadow-none ps-1 ps-sm-2 ms-50" placeholder="Search..." aria-label="Search...">
+                <div style="position: relative;">
+                  <!-- Your Search Bar -->
+                  <input type="search" id="search" class="form-control border-0 shadow-none ps-1 ps-sm-2 ms-50" placeholder="Search..." aria-label="Search...">
+
+                  <!-- Venue List that will be displayed below the search bar -->
+                  <div id="venuelist" style="position: absolute; top: 100%; left: 0; z-index: 9999; max-height: 300px; overflow-y: auto; width: 100%; background-color: #fff; display: none; border: 1px solid #dee2e6; border-top: none; border-radius: 0 0 0.375rem 0.375rem; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); margin-top: -1px;">
+                    {{-- Venue list will be rendered here --}}
+                  </div>
+                </div>
               </div>
             </div>
             <div class="navbar-nav flex-row align-items-center ms-auto gap-5">
@@ -245,4 +254,18 @@
     </div>
   </div>
 </div>
+@php
+  $venues = collect($venues)->map(function($venue) {
+    return [
+      'id' => $venue->id,
+      'name' => $venue->name,
+      'encrypted_id' => Crypt::encryptString($venue->id),
+    ];
+  })->values()->toArray();
+@endphp
+
+<script>
+  window.venues = @json($venues);
+</script>
+
 @endsection

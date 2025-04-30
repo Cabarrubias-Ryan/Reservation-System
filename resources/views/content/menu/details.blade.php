@@ -72,19 +72,22 @@
           <div class="col-md-6 col-lg-5">
             <div class="card">
               <div class="card-body">
-                <h5 class="card-title"><span class="fw-bold">₱{{ number_format($venue->price, 2) }}</span> per day</h5>
+                <h5 class="card-title"><span class="fw-bold" >₱{{ number_format($venue->price, 2) }}</span> per day</h5>
                 <div class="d-flex my-4 align-items-center gap-5">
                   <div class="row w-100">
                     <form id="reservation-form">
+                      <input type="hidden" id="venue_id" value="{{$venue->id}}">
+                      <input type="hidden" id="venue_name" value="{{$venue->name}}">
+                      <input type="hidden" id="venue_price" value="{{$venue->price}}">
                     <div class="col mb-4">
                       <div class="form-floating form-floating-outline">
-                        <input class="form-control" type="date" id="checkin-date" />
+                        <input class="form-control" type="date" id="checkin-date" min="{{ date('Y-m-d') }}" />
                         <label for="checkin-date">CHECK-IN</label>
                       </div>
                     </div>
                     <div class="col mb-4">
                       <div class="form-floating form-floating-outline">
-                        <input class="form-control" type="date" id="checkout-date" />
+                        <input class="form-control" type="date" id="checkout-date" min="{{ date('Y-m-d') }}" />
                         <label for="checkout-date">CHECK-OUT</label>
                       </div>
                     </div>
@@ -172,9 +175,58 @@
                 </a>
             </div>
           </div>
-
       </div>
     </div>
   </div>
 </div>
+@if (Auth::check())
+<div class="modal fade" id="Details" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel1">Reservation Details</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="detailData">
+          @csrf
+          <div style="display:none;" id="VenueId"></div>
+          <div class="row mb-3">
+            <div class="col mb-3">
+              <div class="fw-bold">Name: <span>{{ Auth::user()->firstname}} {{ Auth::user()->middlename == null ? ' ' : Auth::user()->middlename}} {{ Auth::user()->lastname}}</span></div>
+            </div>
+          </div>
+          <div class="row mb-2">
+            <div class="col-4 fw-bold">Place:</div>
+            <div class="col-8" id="name"></div>
+          </div>
+          <div class="row mb-2">
+            <div class="col-4 fw-bold">Time:</div>
+            <div class="col-8">
+              <span id="checkin"></span> - <span id="checkout"></span>
+            </div>
+          </div>
+          <div class="row mb-2">
+            <div class="col-4 fw-bold">Price:</div>
+            <div class="col-8" id="price"></div>
+          </div>
+
+          <div class="row mb-2">
+            <div class="col-4 fw-bold">Number of Days:</div>
+            <div class="col-8" id="dayDifference"></div>
+          </div>
+
+          <div class="row mb-2">
+            <div class="col-4 fw-bold">Total Price:</div>
+            <div class="col-8" id="totalPrice"></div>
+          </div>
+      </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="FilterBtn">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+@endif
 @endsection

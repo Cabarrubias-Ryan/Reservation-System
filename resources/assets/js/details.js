@@ -48,6 +48,55 @@ $(document).ready(function () {
       event.preventDefault();
       return;
     }
+    const checkinDate = $('#checkin-date').val();
+    const checkoutDate = $('#checkout-date').val();
+    const price = $('#venue_price').val();
+    const name = $('#venue_name').val();
+    const venueId = $('#venue_id').val();
+
+    const checkin = new Date(checkinDate);
+    const checkout = new Date(checkoutDate);
+
+    if (checkin >= checkout) {
+      Toastify({
+        text: 'Check-in date cannot be later than or equal check-out date.',
+        duration: 3000,
+        close: true,
+        gravity: 'top', // top or bottom
+        position: 'right', // left, center or right
+        backgroundColor: '#cc3300',
+        stopOnFocus: true
+      }).showToast();
+      event.preventDefault();
+    } else {
+      const timeDifference = checkout - checkin;
+      const dayDifference = timeDifference / (1000 * 3600 * 24); // Convert milliseconds to days
+      const totalPrice = dayDifference * price;
+
+      const totalPriceFormat = new Intl.NumberFormat('PHP', {
+        style: 'currency',
+        currency: 'PHP',
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      }).format(totalPrice);
+
+      const PriceFormat = new Intl.NumberFormat('PHP', {
+        style: 'currency',
+        currency: 'PHP',
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      }).format(price);
+
+      $('#dayDifference').text(dayDifference);
+      $('#checkin').text(checkinDate);
+      $('#checkout').text(checkoutDate);
+      $('#VenueId').text(venueId);
+      $('#name').text(name);
+      $('#price').text(PriceFormat);
+      $('#totalPrice').text(totalPriceFormat);
+
+      $('#Details').modal('show');
+    }
   });
 });
 

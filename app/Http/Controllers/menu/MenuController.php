@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\menu;
 
 use App\Models\Venue;
+use App\Models\Reservation;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Crypt;
@@ -20,6 +21,18 @@ class MenuController extends Controller
       ->where('id',Crypt::decryptString($id))
       ->first();
 
-      return view('content.menu.details',compact('venue'));
+      $reservations = Reservation::leftjoin('venues', 'venues.id', '=', 'reservation.venues_id')
+        ->leftjoin('users', 'reservation.reserve_by', '=', 'users.id')
+        ->where('venues.id',Crypt::decryptString($id))
+        ->whereNull('reservation.deleted_at')
+        ->get()->map(function ($data) {
+              return [
+                  'title' => $data->firstname .' '.$data->lastname.' reservation date', // customize title
+                  'start' => date('Y-m-d', strtotime($data->check_in)),
+                  'end'   => date('Y-m-d', strtotime($data->check_out . ' +1 day')), // optional +1 day for FullCalendar
+              ];
+          });
+
+      return view('content.menu.details',compact('venue','reservations'));
     }
 }

@@ -64,7 +64,7 @@
               <div class="tab-pane fade show active" id="navs-pills-justified-home" role="tabpanel">
                 <div class="row row-cols-1 row-cols-md-3">
                   @foreach($venues as $venue)
-                    @if ($venue->category == "rooms")
+                    @if ($venue->category == "room")
                     <div class="col mb-5">
                       <a href="{{ route('details', Crypt::encryptString($venue->id))}}" class="text-decoration-none">
                         <div class="card">

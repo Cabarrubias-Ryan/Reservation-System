@@ -56,6 +56,21 @@ $(document).ready(function () {
 
     const checkin = new Date(checkinDate);
     const checkout = new Date(checkoutDate);
+    const now = Date.now();
+
+    if (checkin < now && checkout < now) {
+      Toastify({
+        text: "Oops! You can't travel back in time — pick future dates!",
+        duration: 3000,
+        close: true,
+        gravity: 'top', // top or bottom
+        position: 'right', // left, center or right
+        backgroundColor: '#cc3300',
+        stopOnFocus: true
+      }).showToast();
+      event.preventDefault();
+      return;
+    }
 
     if (checkin >= checkout) {
       Toastify({
@@ -68,6 +83,7 @@ $(document).ready(function () {
         stopOnFocus: true
       }).showToast();
       event.preventDefault();
+      return;
     } else {
       const timeDifference = checkout - checkin;
       const dayDifference = timeDifference / (1000 * 3600 * 24); // Convert milliseconds to days
@@ -87,9 +103,13 @@ $(document).ready(function () {
         maximumFractionDigits: 2
       }).format(price);
 
+      const options = { month: 'long', day: 'numeric', year: 'numeric' };
+      const Datecheckin = checkin.toLocaleString('en-PH', options);
+      const Datecheckout = checkout.toLocaleString('en-PH', options);
+
       $('#dayDifference').text(dayDifference);
-      $('#checkin').text(checkinDate);
-      $('#checkout').text(checkoutDate);
+      $('#checkin').text(Datecheckin);
+      $('#checkout').text(Datecheckout);
       $('#VenueId').text(venueId);
       $('#name').text(name);
       $('#price').text(PriceFormat);
@@ -99,7 +119,59 @@ $(document).ready(function () {
     }
   });
 });
+// reservation
 
+$(document).ready(function () {
+  $('body').on('click', '#reservationProcessBtn', function () {
+    let totalPriceFormat = $('#totalPrice').text().trim();
+    let cleanedPrice = totalPriceFormat.replace(/₱|,/g, '');
+    let priceFloat = parseFloat(cleanedPrice);
+
+    let dataDetails = {
+      _token: $('input[name="_token"]').val(), // CSRF token
+      venueId: $('#VenueId').text().trim(),
+      name: $('#name').text().trim(),
+      checkin: $('#checkin').text().trim(),
+      checkout: $('#checkout').text().trim(),
+      price: $('#price').text().trim(),
+      dayDifference: $('#dayDifference').text().trim(),
+      totalPrice: priceFloat
+    };
+    $.ajax({
+      url: '/reservation/add',
+      type: 'POST',
+      cache: false,
+      data: dataDetails,
+      beforeSend: function () {
+        $('#Details').modal('hide');
+        $('.preloader').show();
+      },
+      success: function (data) {
+        $('.preloader').hide();
+        if (data.Error == 1) {
+          Swal.fire('Error!', data.Message, 'error');
+        } else if (data.Error == 0) {
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Saved!',
+            text: data.Message,
+            showConfirmButton: true,
+            confirmButtonText: 'OK'
+          }).then(result => {
+            $('#paymentOptions').modal('show');
+          });
+        }
+      },
+      error: function () {
+        $('.preloader').hide();
+        Swal.fire('Error!', 'Something went wrong, please try again.', 'error');
+      }
+    });
+  });
+});
+
+// login
 $(document).ready(function () {
   $('body').on('click', '#loginBtn', function () {
     const data = [
@@ -177,4 +249,19 @@ $(document).ready(function () {
       }
     });
   });
+});
+document.addEventListener('DOMContentLoaded', function () {
+  var calendarEl = document.getElementById('calendar');
+  var calendar = new FullCalendar.Calendar(calendarEl, {
+    initialView: 'dayGridMonth',
+    selectable: true,
+    dayMaxEvents: 1,
+    moreLinkClick: 'popover',
+    eventColor: '#3C0061',
+    events: window.reservations,
+    eventClick: function (info) {
+      alert(`Reservation: ${info.event.title}`);
+    }
+  });
+  calendar.render();
 });

@@ -100,6 +100,13 @@
           </div>
         </div>
       </section>
+
+      <section class="mt-5">
+        <h4 class="my-5">Calendar</h4>
+        <div class="card p-5">
+          <div id='calendar'></div>
+        </div>
+      </section>
     </div>
   </div>
 </div>
@@ -192,7 +199,7 @@
           @csrf
           <div style="display:none;" id="VenueId"></div>
           <div class="row mb-3">
-            <div class="col mb-3">
+            <div class="col">
               <div class="fw-bold">Name: <span>{{ Auth::user()->firstname}} {{ Auth::user()->middlename == null ? ' ' : Auth::user()->middlename}} {{ Auth::user()->lastname}}</span></div>
             </div>
           </div>
@@ -213,7 +220,7 @@
 
           <div class="row mb-2">
             <div class="col-4 fw-bold">Number of Days:</div>
-            <div class="col-8" id="dayDifference"></div>
+            <div class="col-8" id="dayDifference"> days</div>
           </div>
 
           <div class="row mb-2">
@@ -223,10 +230,35 @@
       </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" id="FilterBtn">Save changes</button>
+        <button type="button" class="btn btn-primary" id="reservationProcessBtn">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="paymentOptions" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel1">Payment Options</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <h6>Would you like to make a payment now or later?</h6>
+        <div class="d-flex justify-content-center">
+          <button type="button" class="btn btn-primary me-2" id="payNowBtn">
+            <i class="ri-bank-card-line me-2"></i> Pay Now
+          </button>
+          <button type="button" class="btn btn-secondary" id="payLaterBtn" data-bs-dismiss="modal" aria-label="Close">
+            <i class="ri-time-line me-2"></i> Pay Later
+          </button>
+        </div>
       </div>
     </div>
   </div>
 </div>
 @endif
+<script>
+  window.reservations = @json($reservations);
+ </script>
 @endsection

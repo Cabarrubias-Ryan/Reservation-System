@@ -268,3 +268,108 @@ $(document).ready(function () {
     });
   });
 });
+
+$(document).ready(function () {
+  // Function to render venues
+  function displayVenues(venues) {
+    const categories = ['room', 'pool', 'house'];
+    categories.forEach(category => {
+      const $categoryList = $(`#${category}s`);
+      $categoryList.empty();
+
+      const filteredVenues = venues.filter(venue => venue.category === category);
+
+      if (filteredVenues.length === 0) {
+        $categoryList.html(`
+          <div class="text-center text-muted">
+            <p><strong>No ${category} found</strong></p>
+            <p class="text-sm">Try adjusting your search criteria or check back later!</p>
+          </div>
+        `);
+        return;
+      }
+
+      filteredVenues.forEach(venue => {
+        const carouselId = 'carouselVenue' + venue.id;
+
+        const venueCard = `
+          <div class="col mb-5">
+            <div class="card">
+              <div id="${carouselId}" class="carousel carousel-dark slide carousel-fade" data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                  ${venue.picture
+                    .map(
+                      (pic, index) => `
+                    <button type="button" data-bs-target="#${carouselId}" data-bs-slide-to="${index}"
+                      ${index === 0 ? 'class="active" aria-current="true"' : ''} aria-label="Slide ${index + 1}">
+                    </button>`
+                    )
+                    .join('')}
+                </div>
+
+                <div class="carousel-inner">
+                  ${venue.picture
+                    .map(
+                      (pic, index) => `
+                    <div class="carousel-item ${index === 0 ? 'active' : ''}">
+                      <img class="d-block w-100" src="${pic.path}" alt="Slide ${index + 1}" style="height: 300px; object-fit: cover;">
+                    </div>`
+                    )
+                    .join('')}
+                </div>
+
+                <a class="carousel-control-prev" href="#${carouselId}" role="button" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#${carouselId}" role="button" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Next</span>
+                </a>
+              </div>
+
+              <div class="card-body">
+                <div class="d-flex">
+                  <h5 class="card-title me-auto">${venue.name}</h5>
+                  <div class="dropdown">
+                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                      <i class="ri-more-2-line"></i>
+                    </button>
+                    <div class="dropdown-menu">
+                      <a class="dropdown-item Edit" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#EditProduct"
+                        data-id="${venue.encrypted_id}" data-name="${venue.name}" data-price="${venue.price}"
+                        data-category="${venue.category}" data-description="${venue.description}"
+                        data-images="${venue.picture.map(pic => pic.path).join(',')}" data-code="${venue.picture[0]?.v_code}">
+                        <i class="ri-pencil-line me-1"></i> Edit
+                      </a>
+                      <a class="dropdown-item DeleteBtn" data-id="${venue.encrypted_id}" href="javascript:void(0);">
+                        <i class="ri-delete-bin-6-line me-1"></i> Delete
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                <p><strong>₱${venue.price.toFixed(2)}</strong> Per day</p>
+              </div>
+            </div>
+          </div>
+        `;
+        $categoryList.append(venueCard);
+      });
+    });
+  }
+
+  // Function to filter venues based on search query
+  function filterVenues(query) {
+    const filtered = window.venues.filter(venue => venue.name.toLowerCase().includes(query));
+    displayVenues(filtered);
+  }
+
+  // Search input handler
+  $('#search').on('input', function () {
+    const query = $(this).val().toLowerCase();
+    filterVenues(query);
+  });
+
+  // Render all venues initially on page load
+  displayVenues(window.venues);
+});

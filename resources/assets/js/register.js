@@ -259,58 +259,21 @@ $(document).ready(function () {
     });
   });
 });
-//for searching
+
+// search
 $(document).ready(function () {
-  $('#search').on('keyup', function () {
-    var data = $(this).val().toLowerCase();
+  function displayUsers(users) {
+    const $userList = $('#userlist');
+    $userList.empty();
 
-    if (data.length >= 1) {
-      $.ajax({
-        type: 'POST',
-        url: '/auth/register-basic/search',
-        cache: false,
-        data: {
-          _token: $('meta[name="csrf-token"]').attr('content'),
-          search: data
-        },
-        dataType: 'json',
-        success: function (data) {
-          if (data.Error == 1) {
-            Swal.fire('Error!', data.Message, 'error');
-          } else if (data.Error == 0) {
-            renderTaskList(data.html);
-          }
-        },
-        error: function () {
-          Swal.fire('Error!', 'Something went wrong, please try again.', 'error');
-        }
-      });
-    } else {
-      $.ajax({
-        type: 'GET',
-        url: '/auth/register-basic',
-        cache: false,
-        success: function (data) {
-          if (data.Error == 1) {
-            Swal.fire('Error!', data.Message, 'error');
-          } else if (data.Error == 0) {
-            renderTaskList(data.html);
-          }
-        },
-        error: function () {
-          Swal.fire('Error!', 'Something went wrong, please try again.', 'error');
-        }
-      });
+    if (users.length === 0) {
+      $userList.html(`<tr><td colspan="5" class="text-center text-muted">No users found.</td></tr>`);
+      return;
     }
-  });
 
-  function renderTaskList(users) {
-    let taskListHtml = ''; // Initialize an empty string for task list HTML
-
-    // Loop through each task and generate the HTML
-    users.forEach(function (user) {
-      taskListHtml += `
-          <tr>
+    users.forEach(user => {
+      const userRow = `
+        <tr>
           <td><span>${user.firstname} ${user.lastname}</span></td>
           <td>${user.email}</td>
           <td>${user.username}</td>
@@ -320,30 +283,43 @@ $(document).ready(function () {
               <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="ri-more-2-line"></i></button>
               <div class="dropdown-menu">
                 <a class="dropdown-item Edit" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#EditAccount"
-                data-id="${user.id}"
-                data-firstname="${user.firstname}"
-                data-middlename="${user.middlename}"
-                data-lastname="${user.lastname}"
-                data-username="${user.username}"
-                data-email="${user.email}"
-                ><i class="ri-pencil-line me-1"></i> Edit</a>
-                <a class="dropdown-item DeleteBtn" data-id="${user.id}" href="javascript:void(0);"><i class="ri-delete-bin-6-line me-1"></i> Delete</a>
+                  data-id="${user.encrypted_id}"
+                  data-firstname="${user.firstname}"
+                  data-middlename="${user.middlename}"
+                  data-lastname="${user.lastname}"
+                  data-username="${user.username}"
+                  data-email="${user.email}">
+                  <i class="ri-pencil-line me-1"></i> Edit
+                </a>
+                <a class="dropdown-item DeleteBtn" href="javascript:void(0);" data-id="${user.encrypted_id}">
+                  <i class="ri-delete-bin-6-line me-1"></i> Delete
+                </a>
               </div>
             </div>
           </td>
         </tr>
-          `;
+      `;
+      $userList.append(userRow);
     });
-
-    if (users.length === 0) {
-      taskListHtml = `
-      <tr>
-          <h5>No Task Found</h5>
-      </tr>
-          `;
-    }
-
-    // Update the task list container with the generated HTML
-    $('#userlist').html(taskListHtml);
   }
+
+  function filterUsers(query) {
+    const filtered = window.users.filter(user => {
+      const fullName = `${user.firstname} ${user.lastname}`.toLowerCase();
+      return (
+        fullName.includes(query) ||
+        user.username.toLowerCase().includes(query) ||
+        user.email.toLowerCase().includes(query)
+      );
+    });
+    displayUsers(filtered);
+  }
+
+  $('#search').on('input', function () {
+    const query = $(this).val().toLowerCase();
+    filterUsers(query);
+  });
+
+  // Render all users on page load
+  displayUsers(window.users);
 });

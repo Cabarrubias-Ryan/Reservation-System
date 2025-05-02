@@ -17,7 +17,12 @@ class Venue extends Model
       'created_at',
       'updated_at',
       'deleted_at',
-      'logs_id'
+      'logs_id',
+      'wifi',
+      'parking',
+      'amenities',
+      'tv',
+      'gym'
     ];
     public function picture()
     {

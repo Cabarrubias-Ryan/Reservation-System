@@ -10,8 +10,10 @@ class Reservation extends Model
     protected $fillable = [
         'id',
         'name',
-        'address',
-        'dataschedule',
+        'email',
+        'check_in',
+        'check_out',
+        'number_of_days',
         'amount',
         'status',
         'reserve_by',

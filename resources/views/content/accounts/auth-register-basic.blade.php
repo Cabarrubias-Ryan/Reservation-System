@@ -34,30 +34,6 @@
         </tr>
       </thead>
       <tbody class="table-border-bottom-0" id="userlist">
-        @foreach ($users as $user)
-        <tr>
-          <td><span>{{ $user->firstname }} {{ $user->lastname }}</span></td>
-          <td>{{ $user->email}}</td>
-          <td>{{ $user->username}}</td>
-          <td><span class="badge rounded-pill bg-label-primary me-1">Active</span></td>
-          <td>
-            <div class="dropdown">
-              <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="ri-more-2-line"></i></button>
-              <div class="dropdown-menu">
-                <a class="dropdown-item Edit" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#EditAccount"
-                data-id="{{ Crypt::encryptString($user->id) }}"
-                data-firstname="{{ $user->firstname}}"
-                data-middlename="{{ $user->middlename}}"
-                data-lastname="{{ $user->lastname}}"
-                data-username="{{ $user->username}}"
-                data-email="{{ $user->email}}"
-                ><i class="ri-pencil-line me-1"></i> Edit</a>
-                <a class="dropdown-item DeleteBtn" data-id="{{ Crypt::encryptString($user->id) }}" href="javascript:void(0);"><i class="ri-delete-bin-6-line me-1"></i> Delete</a>
-              </div>
-            </div>
-          </td>
-        </tr>
-        @endforeach
       </tbody>
     </table>
   </div>
@@ -193,4 +169,20 @@
     </div>
   </div>
 </div>
+@php
+  $users = collect($users)->map(function($user) {
+  return [
+      'id' => $user->id,
+      'encrypted_id' => Crypt::encryptString($user->id),
+      'firstname' => $user->firstname,
+      'middlename' => $user->middlename,
+      'lastname' => $user->lastname,
+      'username' => $user->username,
+      'email' => $user->email,
+  ];
+  })->values()->toArray();
+@endphp
+<script>
+  window.users = @json($users);
+</script>
 @endsection

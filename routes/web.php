@@ -35,6 +35,7 @@ use App\Http\Controllers\user_interface\ListGroups;
 use App\Http\Controllers\user_interface\Typography;
 use App\Http\Controllers\authentications\LoginBasic;
 use App\Http\Controllers\pages\MiscUnderMaintenance;
+use App\Http\Controllers\calendar\CalendarController;
 use App\Http\Controllers\form_layouts\HorizontalForm;
 use App\Http\Controllers\tables\Basic as TablesBasic;
 use App\Http\Controllers\authentications\RegisterUser;
@@ -42,11 +43,11 @@ use App\Http\Controllers\extended_ui\PerfectScrollbar;
 use App\Http\Controllers\pages\AccountSettingsAccount;
 use App\Http\Controllers\authentications\RegisterBasic;
 use App\Http\Controllers\user_interface\TooltipsPopovers;
-use App\Http\Controllers\pages\AccountSettingsConnections;
 
 
 
 // New import Controller
+use App\Http\Controllers\pages\AccountSettingsConnections;
 use App\Http\Controllers\reservation\ReservationController;
 use App\Http\Controllers\pages\AccountSettingsNotifications;
 use App\Http\Controllers\authentications\ForgotPasswordBasic;
@@ -64,7 +65,7 @@ Route::get('/venue/details/{id}', [MenuController::class, 'viewDetails'])->name(
 Route::post('/venue/search', [MenuController::class, 'search'])->name('search');
 
 Route::middleware(['auth'])->group(function () {
-
+  Route::post('/reservation/add', [ReservationController::class, 'store'])->name('reservation-add');
 });
 
 Route::middleware(['guest'])->group(function () {
@@ -94,6 +95,8 @@ Route::middleware(['auth', 'user-access:Admin'])->group(function () {
   Route::post('/auth/register-basic/search', [RegisterBasic::class, 'search'])->name('auth-register-basic-search');
 
   Route::get('/admin/reservation', [ReservationController::class, 'index'])->name('admin-reservation');
+
+  Route::get('/admin/calendar', [CalendarController::class, 'index'])->name('admin-calendar');
 
 });
 

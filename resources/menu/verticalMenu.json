@@ -7,26 +7,16 @@
       "slug": "dashboard-analytics"
     },
     {
-      "url": "admin/product",
-      "name": "Product",
-      "icon": "menu-icon tf-icons ri-box-3-line",
-      "slug": "admin-product"
-    },
-    {
       "url": "auth/register-basic",
       "name": "Register",
       "icon": "menu-icon tf-icons ri-user-shared-2-line",
       "slug": "auth-register-basic"
     },
     {
-      "url": "admin/reservation",
-      "name": "Reservation",
-      "icon": "menu-icon tf-icons ri-booklet-line",
-      "slug": "admin-reservation",
-      "badge": [
-        "danger",
-        "5"
-      ]
+      "url": "admin/product",
+      "name": "Product",
+      "icon": "menu-icon tf-icons ri-box-3-line",
+      "slug": "admin-product"
     },
     {
       "name": "Layouts",
@@ -104,6 +94,18 @@
     },
     {
       "menuHeader": "Components"
+    },
+    {
+      "url": "admin/reservation",
+      "name": "Reservation",
+      "icon": "menu-icon tf-icons ri-booklet-line",
+      "slug": "admin-reservation"
+    },
+    {
+      "url": "admin/calendar",
+      "name": "Calendar",
+      "icon": "menu-icon tf-icons ri-calendar-event-line",
+      "slug": "admin-calendar"
     },
     {
       "name": "Cards",
@@ -237,7 +239,7 @@
       "slug": "icons-ri"
     },
     {
-      "menuHeader": "Forms & Tables"
+      "menuHeader": "System Reports"
     },
     {
       "name": "Form Elements",

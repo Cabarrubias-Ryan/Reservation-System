@@ -11,12 +11,9 @@ use Illuminate\Support\Facades\Crypt;
 
 class RegisterBasic extends Controller
 {
-  public function index(Request $request)
+  public function index()
   {
     $users = User::orderBy('id', 'DESC')->whereNull('deleted_at')->get();
-    if ($request->ajax()) {
-      return response()->json(['html' => $users, 'Error' => 0]);
-    }
     return view('content.accounts.auth-register-basic', compact('users'));
   }
   public function store(Request $request){
@@ -95,11 +92,5 @@ class RegisterBasic extends Controller
     if($resultUser){
       return response()->json(['Error' => 0, 'Message' => 'Successfully delete a data']);
     }
-  }
-  public function search(Request $request){
-    $query = $request->search;
-    $task = User::where('firstname', 'like', '%' . $query . '%')->whereNull('deleted_at')->get();
-
-    return response()->json(['html' => $task, 'Error' => 0]);
   }
 }

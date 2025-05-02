@@ -14,15 +14,12 @@
       <div class="navbar-nav align-items-start flex-grow-1 mb-2 mb-sm-0">
         <div class="nav-item d-flex align-items-center w-100">
           <i class="ri-search-line ri-22px me-1_5"></i>
-          <input type="text" class="form-control border-0 shadow-none ps-1 ps-sm-2 ms-50 w-100" placeholder="Search..." aria-label="Search...">
+          <input type="text" id="search" class="form-control border-0 shadow-none ps-1 ps-sm-2 ms-50 w-100" placeholder="Search..." aria-label="Search...">
         </div>
       </div>
 
       <!-- Buttons -->
       <div class="navbar-nav d-flex flex-row align-items-center gap-2 ms-auto">
-        <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#FilterModal">
-          <span class="tf-icons ri-filter-line ri-16px me-1_5"></span>Filter
-        </button>
         <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#AddProduct">
           <span class="tf-icons ri-add-circle-line ri-16px me-1_5"></span>Add Product
         </button>
@@ -44,192 +41,18 @@
       </ul>
       <div class="tab-content">
         <div class="tab-pane fade show active" id="navs-pills-justified-home" role="tabpanel">
-          <div class="row row-cols-1 row-cols-md-3">
-            @foreach($venues as $venue)
-              @if ($venue->category == "rooms")
-              <div class="col mb-5">
-                <div class="card">
-                  @php
-                    $carouselId = 'carouselVenue' . $venue->id;
-                  @endphp
+          <div class="row row-cols-1 row-cols-md-3" id="rooms">
 
-                  <div id="{{ $carouselId }}" class="carousel carousel-dark slide carousel-fade" data-bs-ride="carousel">
-                    <div class="carousel-indicators">
-                      @foreach($venue->picture as $index => $pic)
-                        <button type="button" data-bs-target="#{{ $carouselId }}" data-bs-slide-to="{{ $index }}"
-                          @if($index == 0) class="active" aria-current="true" @endif aria-label="Slide {{ $index + 1 }}"></button>
-                      @endforeach
-                    </div>
-
-                    <div class="carousel-inner">
-                      @foreach($venue->picture as $index => $pic)
-                        <div class="carousel-item @if($index == 0) active @endif">
-                          <img class="d-block w-100" src="{{ asset($pic->path) }}" alt="Slide {{ $index + 1 }}" style="height: 300px; object-fit: cover;">
-                        </div>
-                      @endforeach
-                    </div>
-
-                    <a class="carousel-control-prev" href="#{{ $carouselId }}" role="button" data-bs-slide="prev">
-                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                      <span class="visually-hidden">Previous</span>
-                    </a>
-                    <a class="carousel-control-next" href="#{{ $carouselId }}" role="button" data-bs-slide="next">
-                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                      <span class="visually-hidden">Next</span>
-                    </a>
-                  </div>
-
-                  <div class="card-body">
-                    <div class="d-flex">
-                      <h5 class="card-title me-auto">{{ $venue->name }}</h5>
-                      <div class="dropdown">
-                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="ri-more-2-line"></i></button>
-                        <div class="dropdown-menu">
-                          <a class="dropdown-item Edit" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#EditProduct"
-                          data-id="{{ Crypt::encryptString($venue->id) }}"
-                          data-name="{{ $venue->name }}"
-                          data-price="{{ $venue->price }}"
-                          data-category="{{ $venue->category }}"
-                          data-description="{{ $venue->description }}"
-                          data-images="{{ implode(',', $venue->picture->pluck('path')->toArray()) }}"
-                          data-code="{{ $venue->picture->pluck('v_code')->first() }}"
-                          ><i class="ri-pencil-line me-1"></i> Edit</a>
-                          <a class="dropdown-item DeleteBtn" data-id="{{ Crypt::encryptString($venue->id) }}" href="javascript:void(0);"><i class="ri-delete-bin-6-line me-1"></i> Delete</a>
-                        </div>
-                      </div>
-                    </div>
-                    <p><strong>₱{{ number_format($venue->price, 2) }}</strong> Per day</p>
-                  </div>
-                </div>
-              </div>
-              @endif
-              @endforeach
           </div>
         </div>
         <div class="tab-pane fade" id="navs-pills-justified-profile" role="tabpanel">
-          <div class="row row-cols-1 row-cols-md-3">
-            @foreach($venues as $venue)
-              @if ($venue->category == "pool")
-              <div class="col mb-5">
-                <div class="card">
-                  @php
-                    $carouselId = 'carouselVenue' . $venue->id;
-                  @endphp
+          <div class="row row-cols-1 row-cols-md-3" id="pools">
 
-                  <div id="{{ $carouselId }}" class="carousel carousel-dark slide carousel-fade" data-bs-ride="carousel">
-                    <div class="carousel-indicators">
-                      @foreach($venue->picture as $index => $pic)
-                        <button type="button" data-bs-target="#{{ $carouselId }}" data-bs-slide-to="{{ $index }}"
-                          @if($index == 0) class="active" aria-current="true" @endif aria-label="Slide {{ $index + 1 }}"></button>
-                      @endforeach
-                    </div>
-
-                    <div class="carousel-inner">
-                      @foreach($venue->picture as $index => $pic)
-                        <div class="carousel-item @if($index == 0) active @endif">
-                          <img class="d-block w-100" src="{{ asset($pic->path) }}" alt="Slide {{ $index + 1 }}" style="height: 300px; object-fit: cover;">
-                        </div>
-                      @endforeach
-                    </div>
-
-                    <a class="carousel-control-prev" href="#{{ $carouselId }}" role="button" data-bs-slide="prev">
-                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                      <span class="visually-hidden">Previous</span>
-                    </a>
-                    <a class="carousel-control-next" href="#{{ $carouselId }}" role="button" data-bs-slide="next">
-                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                      <span class="visually-hidden">Next</span>
-                    </a>
-                  </div>
-
-                  <div class="card-body">
-                    <div class="d-flex">
-                      <h5 class="card-title me-auto">{{ $venue->name }}</h5>
-                      <div class="dropdown">
-                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="ri-more-2-line"></i></button>
-                        <div class="dropdown-menu">
-                          <a class="dropdown-item Edit" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#EditProduct"
-                          data-id="{{ Crypt::encryptString($venue->id) }}"
-                          data-name="{{ $venue->name }}"
-                          data-price="{{ $venue->price }}"
-                          data-category="{{ $venue->category }}"
-                          data-description="{{ $venue->description }}"
-                          data-images="{{ implode(',', $venue->picture->pluck('path')->toArray()) }}"
-                          data-code="{{ $venue->picture->pluck('v_code')->first() }}"
-                          ><i class="ri-pencil-line me-1"></i> Edit</a>
-                          <a class="dropdown-item DeleteBtn" data-id="{{ Crypt::encryptString($venue->id) }}" href="javascript:void(0);"><i class="ri-delete-bin-6-line me-1"></i> Delete</a>
-                        </div>
-                      </div>
-                    </div>
-                    <p><strong>₱{{ number_format($venue->price, 2) }}</strong> Per day</p>
-                  </div>
-                </div>
-              </div>
-              @endif
-              @endforeach
           </div>
         </div>
         <div class="tab-pane fade" id="navs-pills-justified-messages" role="tabpanel">
-          <div class="row row-cols-1 row-cols-md-3">
-            @foreach($venues as $venue)
-              @if ($venue->category == "house")
-              <div class="col mb-5">
-                <div class="card">
-                  @php
-                    $carouselId = 'carouselVenue' . $venue->id;
-                  @endphp
+          <div class="row row-cols-1 row-cols-md-3" id="houses">
 
-                  <div id="{{ $carouselId }}" class="carousel carousel-dark slide carousel-fade" data-bs-ride="carousel">
-                    <div class="carousel-indicators">
-                      @foreach($venue->picture as $index => $pic)
-                        <button type="button" data-bs-target="#{{ $carouselId }}" data-bs-slide-to="{{ $index }}"
-                          @if($index == 0) class="active" aria-current="true" @endif aria-label="Slide {{ $index + 1 }}"></button>
-                      @endforeach
-                    </div>
-
-                    <div class="carousel-inner">
-                      @foreach($venue->picture as $index => $pic)
-                        <div class="carousel-item @if($index == 0) active @endif">
-                          <img class="d-block w-100" src="{{ asset($pic->path) }}" alt="Slide {{ $index + 1 }}" style="height: 300px; object-fit: cover;">
-                        </div>
-                      @endforeach
-                    </div>
-
-                    <a class="carousel-control-prev" href="#{{ $carouselId }}" role="button" data-bs-slide="prev">
-                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                      <span class="visually-hidden">Previous</span>
-                    </a>
-                    <a class="carousel-control-next" href="#{{ $carouselId }}" role="button" data-bs-slide="next">
-                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                      <span class="visually-hidden">Next</span>
-                    </a>
-                  </div>
-
-                  <div class="card-body">
-                    <div class="d-flex">
-                      <h5 class="card-title me-auto">{{ $venue->name }}</h5>
-                      <div class="dropdown">
-                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="ri-more-2-line"></i></button>
-                        <div class="dropdown-menu">
-                          <a class="dropdown-item Edit" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#EditProduct"
-                          data-id="{{ Crypt::encryptString($venue->id) }}"
-                          data-name="{{ $venue->name }}"
-                          data-price="{{ $venue->price }}"
-                          data-category="{{ $venue->category }}"
-                          data-description="{{ $venue->description }}"
-                          data-images="{{ implode(',', $venue->picture->pluck('path')->toArray()) }}"
-                          data-code="{{ $venue->picture->pluck('v_code')->first() }}"
-                          ><i class="ri-pencil-line me-1"></i> Edit</a>
-                          <a class="dropdown-item DeleteBtn" data-id="{{ Crypt::encryptString($venue->id) }}" href="javascript:void(0);"><i class="ri-delete-bin-6-line me-1"></i> Delete</a>
-                        </div>
-                      </div>
-                    </div>
-                    <p><strong>₱{{ number_format($venue->price, 2) }}</strong> Per day</p>
-                  </div>
-                </div>
-              </div>
-              @endif
-              @endforeach
           </div>
         </div>
       </div>
@@ -283,7 +106,7 @@
               <div class="form-floating form-floating-outline mb-6">
                 <select class="form-select" id="category" name="category" aria-label="Default select example">
                   <option value="" selected>Select Category</option>
-                  <option value="rooms">Rooms</option>
+                  <option value="room">Room</option>
                   <option value="house">House</option>
                   <option value="pool">Pools</option>
                 </select>
@@ -304,48 +127,6 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
         <button type="button" class="btn btn-primary" id="SaveProduct">Save</button>
-      </div>
-    </div>
-  </div>
-</div>
-{{-- Filter Modal --}}
-<div class="modal fade" id="FilterModal" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel1">Filter</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <form id="filterData">
-          @csrf
-        <div class="row">
-          <div class="col mb-6 mt-2">
-            <div class="form-floating form-floating-outline">
-              <input type="text" id="nameBasic" class="form-control" placeholder="Enter Name">
-              <label for="nameBasic">Name</label>
-            </div>
-          </div>
-        </div>
-        <div class="row g-4">
-          <div class="col mb-2">
-            <div class="form-floating form-floating-outline">
-              <input type="email" id="emailBasic" class="form-control" placeholder="xxxx@xxx.xx">
-              <label for="emailBasic">Email</label>
-            </div>
-          </div>
-          <div class="col mb-2">
-            <div class="form-floating form-floating-outline">
-              <input type="date" id="dobBasic" class="form-control">
-              <label for="dobBasic">DOB</label>
-            </div>
-          </div>
-        </div>
-      </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" id="FilterBtn">Save changes</button>
       </div>
     </div>
   </div>
@@ -404,7 +185,7 @@
               <div class="form-floating form-floating-outline mb-6">
                 <select class="form-select" id="Edit_category" name="category" aria-label="Default select example">
                   <option value="" selected>Select Category</option>
-                  <option value="rooms">Rooms</option>
+                  <option value="room">Room</option>
                   <option value="house">House</option>
                   <option value="pool">Pools</option>
                 </select>
@@ -429,4 +210,21 @@
     </div>
   </div>
 </div>
+@php
+  $venues = collect($venues)->map(function($venue) {
+    return [
+      'id' => $venue->id,
+      'name' => $venue->name,
+      'category' => $venue->category,
+      'description' => $venue->description,
+      'picture' => $venue->picture,
+      'price' => $venue->price,
+      'encrypted_id' => Crypt::encryptString($venue->id),
+    ];
+  })->values()->toArray();
+@endphp
+
+<script>
+  window.venues = @json($venues);
+</script>
 @endsection

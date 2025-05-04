@@ -52,28 +52,6 @@
       ]
     },
     {
-      "name": "Account Settings",
-      "icon": "menu-icon tf-icons ri-layout-left-line",
-      "slug": "pages-account-settings",
-      "submenu": [
-        {
-          "url": "pages/account-settings-account",
-          "name": "Account",
-          "slug": "pages-account-settings-account"
-        },
-        {
-          "url": "pages/account-settings-notifications",
-          "name": "Notifications",
-          "slug": "pages-account-settings-notifications"
-        },
-        {
-          "url": "pages/account-settings-connections",
-          "name": "Connections",
-          "slug": "pages-account-settings-connections"
-        }
-      ]
-    },
-    {
       "name": "Misc",
       "icon": "menu-icon tf-icons ri-instance-line",
       "slug": "pages-misc",

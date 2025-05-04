@@ -7,6 +7,7 @@ use App\Http\Controllers\layouts\Fluid;
 use App\Http\Controllers\cards\CardBasic;
 use App\Http\Controllers\pages\MiscError;
 use App\Http\Controllers\layouts\Container;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\dashboard\Analytics;
 use App\Http\Controllers\layouts\WithoutMenu;
 use App\Http\Controllers\menu\MenuController;
@@ -42,11 +43,11 @@ use App\Http\Controllers\authentications\RegisterUser;
 use App\Http\Controllers\extended_ui\PerfectScrollbar;
 use App\Http\Controllers\pages\AccountSettingsAccount;
 use App\Http\Controllers\authentications\RegisterBasic;
-use App\Http\Controllers\user_interface\TooltipsPopovers;
 
 
 
 // New import Controller
+use App\Http\Controllers\user_interface\TooltipsPopovers;
 use App\Http\Controllers\pages\AccountSettingsConnections;
 use App\Http\Controllers\reservation\ReservationController;
 use App\Http\Controllers\pages\AccountSettingsNotifications;
@@ -66,6 +67,8 @@ Route::post('/venue/search', [MenuController::class, 'search'])->name('search');
 
 Route::middleware(['auth'])->group(function () {
   Route::post('/reservation/add', [ReservationController::class, 'store'])->name('reservation-add');
+  Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
+  Route::get('/reservation', [ProfileController::class, 'reservation'])->name('profile-reservation');
 });
 
 Route::middleware(['guest'])->group(function () {
@@ -98,6 +101,9 @@ Route::middleware(['auth', 'user-access:Admin'])->group(function () {
 
   Route::get('/admin/calendar', [CalendarController::class, 'index'])->name('admin-calendar');
 
+  Route::get('/pages/account-settings-account', [AccountSettingsAccount::class, 'index'])->name('pages-account-settings-account');
+  Route::get('/pages/account-settings-notifications', [AccountSettingsNotifications::class, 'index'])->name('pages-account-settings-notifications');
+  Route::get('/pages/account-settings-connections', [AccountSettingsConnections::class, 'index'])->name('pages-account-settings-connections');
 });
 
 
@@ -123,9 +129,6 @@ Route::get('/layouts/container', [Container::class, 'index'])->name('layouts-con
 Route::get('/layouts/blank', [Blank::class, 'index'])->name('layouts-blank');
 
 // pages
-Route::get('/pages/account-settings-account', [AccountSettingsAccount::class, 'index'])->name('pages-account-settings-account');
-Route::get('/pages/account-settings-notifications', [AccountSettingsNotifications::class, 'index'])->name('pages-account-settings-notifications');
-Route::get('/pages/account-settings-connections', [AccountSettingsConnections::class, 'index'])->name('pages-account-settings-connections');
 Route::get('/pages/misc-error', [MiscError::class, 'index'])->name('pages-misc-error');
 Route::get('/pages/misc-under-maintenance', [MiscUnderMaintenance::class, 'index'])->name('pages-misc-under-maintenance');
 

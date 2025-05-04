@@ -39,7 +39,7 @@
               <ul class="dropdown-menu dropdown-menu-end mt-3 py-2">
                 @auth
                 <li>
-                  <a class="dropdown-item" href="javascript:void(0);">
+                  <a class="dropdown-item" href="{{ route('profile')}}">
                     <div class="d-flex align-items-center">
                       <div class="flex-shrink-0 me-2">
                         <div class="avatar avatar-online">
@@ -74,23 +74,23 @@
                 @auth
                 <li>
                   <a class="dropdown-item" href="javascript:void(0);">
-                    <i class="ri-user-3-line ri-22px me-2"></i>
-                    <span class="align-middle">My Profile</span>
-                  </a>
-                </li>
-                <li>
-                  <a class="dropdown-item" href="javascript:void(0);">
-                    <i class='ri-settings-4-line ri-22px me-2'></i>
-                    <span class="align-middle">Settings</span>
-                  </a>
-                </li>
-                <li>
-                  <a class="dropdown-item" href="javascript:void(0);">
                     <span class="d-flex align-items-center align-middle">
                       <i class="flex-shrink-0 ri-file-text-line ri-22px me-3"></i>
                       <span class="flex-grow-1 align-middle">Billing</span>
                       <span class="flex-shrink-0 badge badge-center rounded-pill bg-danger h-px-20 d-flex align-items-center justify-content-center">4</span>
                     </span>
+                  </a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="javascript:void(0);">
+                    <i class='ri-gift-line ri-22px me-2'></i>
+                    <span class="align-middle">Gift card</span>
+                  </a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="javascript:void(0);">
+                    <i class='ri-question-mark ri-22px me-2'></i>
+                    <span class="align-middle">Help</span>
                   </a>
                 </li>
                 <li>

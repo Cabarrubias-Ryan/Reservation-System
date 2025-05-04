@@ -24,6 +24,7 @@ class MenuController extends Controller
       $reservations = Reservation::leftjoin('venues', 'venues.id', '=', 'reservation.venues_id')
         ->leftjoin('users', 'reservation.reserve_by', '=', 'users.id')
         ->where('venues.id',Crypt::decryptString($id))
+        ->where('status', 1)
         ->whereNull('reservation.deleted_at')
         ->get()->map(function ($data) {
               return [

@@ -12,6 +12,7 @@ class CalendarController extends Controller
     {
         $reservations = Reservation::with('venue')
         ->leftjoin('users', 'reservation.reserve_by', '=', 'users.id')
+        ->where('status', 1)
         ->whereNull('reservation.deleted_at')
         ->get()->map(function ($data) {
               return [

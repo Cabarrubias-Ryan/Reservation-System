@@ -55,7 +55,7 @@ $navbarDetached = ($navbarDetached ?? '');
             </a>
             <ul class="dropdown-menu dropdown-menu-end mt-3 py-2">
             <li>
-                <a class="dropdown-item" href="javascript:void(0);">
+                <a class="dropdown-item" href="{{ route('pages-account-settings-account') }}">
                   <div class="d-flex align-items-center">
                     <div class="flex-shrink-0 me-2">
                       <div class="avatar avatar-online">
@@ -73,7 +73,7 @@ $navbarDetached = ($navbarDetached ?? '');
                 <div class="dropdown-divider"></div>
               </li>
               <li>
-                <a class="dropdown-item" href="javascript:void(0);">
+                <a class="dropdown-item" href="{{ route('pages-account-settings-account')}}">
                   <i class="ri-user-3-line ri-22px me-2"></i>
                   <span class="align-middle">My Profile</span>
                 </a>

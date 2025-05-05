@@ -57,9 +57,9 @@ class ReservationController extends Controller
         'venues_id' => $request->venueId
       ];
 
-      $reservation = Reservation::insert($reservationData);
+      $reservation = Reservation::create($reservationData);
       if ($reservation) {
-        return response()->json(['Error' => 0, 'Message' => 'Successfully reserve a data']);
+        return response()->json(['Error' => 0, 'Message' => 'Successfully reserve a data', 'data' => $reservation->id]);
       }
     }
 }

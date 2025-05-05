@@ -119,8 +119,8 @@ $(document).ready(function () {
     }
   });
 });
-// reservation
 
+// reservation
 $(document).ready(function () {
   $('body').on('click', '#reservationProcessBtn', function () {
     let totalPriceFormat = $('#totalPrice').text().trim();
@@ -159,6 +159,8 @@ $(document).ready(function () {
             showConfirmButton: true,
             confirmButtonText: 'OK'
           }).then(result => {
+            const reservationData = data.data;
+            $('#reservationID').val(reservationData);
             $('#paymentOptions').modal('show');
           });
         }
@@ -170,7 +172,6 @@ $(document).ready(function () {
     });
   });
 });
-
 // login
 $(document).ready(function () {
   $('body').on('click', '#loginBtn', function () {

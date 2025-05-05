@@ -249,9 +249,13 @@
         </div>
         <h6>Would you like to make a payment now or later?</h6>
         <div class="d-flex justify-content-center">
-          <button type="button" class="btn btn-primary me-2" id="payNowBtn">
-            <i class="ri-bank-card-line me-2"></i> Pay Now
-          </button>
+          <form action="{{ route('payment-view') }}" method="POST" id="paymentForm">
+            @csrf
+            <input type="hidden" name="id" id="reservationID">
+            <button type="submit" class="btn btn-primary me-2" id="proceedToPaymentBtn">
+              <i class="ri-bank-card-line me-2"></i> Pay Now
+            </button>
+          </form>
           <button type="button" class="btn btn-secondary" id="payLaterBtn" data-bs-dismiss="modal" aria-label="Close">
             <i class="ri-time-line me-2"></i> Pay Later
           </button>

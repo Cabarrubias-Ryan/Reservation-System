@@ -7,7 +7,6 @@ use App\Http\Controllers\layouts\Fluid;
 use App\Http\Controllers\cards\CardBasic;
 use App\Http\Controllers\pages\MiscError;
 use App\Http\Controllers\layouts\Container;
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\dashboard\Analytics;
 use App\Http\Controllers\layouts\WithoutMenu;
 use App\Http\Controllers\menu\MenuController;
@@ -31,7 +30,9 @@ use App\Http\Controllers\user_interface\Offcanvas;
 use App\Http\Controllers\user_interface\TabsPills;
 use App\Http\Controllers\form_elements\InputGroups;
 use App\Http\Controllers\form_layouts\VerticalForm;
+use App\Http\Controllers\payment\PaymentController;
 use App\Http\Controllers\product\ProductController;
+use App\Http\Controllers\profile\ProfileController;
 use App\Http\Controllers\user_interface\ListGroups;
 use App\Http\Controllers\user_interface\Typography;
 use App\Http\Controllers\authentications\LoginBasic;
@@ -42,11 +43,11 @@ use App\Http\Controllers\tables\Basic as TablesBasic;
 use App\Http\Controllers\authentications\RegisterUser;
 use App\Http\Controllers\extended_ui\PerfectScrollbar;
 use App\Http\Controllers\pages\AccountSettingsAccount;
-use App\Http\Controllers\authentications\RegisterBasic;
 
 
 
 // New import Controller
+use App\Http\Controllers\authentications\RegisterBasic;
 use App\Http\Controllers\user_interface\TooltipsPopovers;
 use App\Http\Controllers\pages\AccountSettingsConnections;
 use App\Http\Controllers\reservation\ReservationController;
@@ -69,6 +70,9 @@ Route::middleware(['auth'])->group(function () {
   Route::post('/reservation/add', [ReservationController::class, 'store'])->name('reservation-add');
   Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
   Route::get('/reservation', [ProfileController::class, 'reservation'])->name('profile-reservation');
+  Route::post('/payment', [PaymentController::class, 'index'])->name('payment-view');
+  Route::post('/payment/add', [PaymentController::class, 'payment'])->name('payment-add');
+  Route::post('/payment/add/success', [PaymentController::class, 'success'])->name('payment-success');
 });
 
 Route::middleware(['guest'])->group(function () {

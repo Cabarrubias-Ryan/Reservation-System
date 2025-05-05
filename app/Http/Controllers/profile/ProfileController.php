@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\profile;
 
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class ProfileController extends Controller
 {

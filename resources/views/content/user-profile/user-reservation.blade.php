@@ -12,7 +12,7 @@
 <div class="container-fluid">
   <div class="position-relative">
     <div class="container p-5">
-      <nav aria-label="breadcrumb" class="mt-5">
+      <nav aria-label="breadcrumb" class="mt-2">
         <ol class="breadcrumb breadcrumb-style2">
           <li class="breadcrumb-item">
             <a href="{{ route('home')}}"><i class="ri-arrow-left-s-line"></i></a>
@@ -39,7 +39,7 @@
                   </div>
                 </div>
               </header>
-              <div class="table-responsive text-nowrap overflow-auto" style="max-height: 500px;">
+              <div class="table-responsive text-nowrap overflow-auto" style="max-height: 425px;">
                 <table class="table table-hover">
                   <thead class="position-sticky top-0 bg-body">
                     <tr>
@@ -67,4 +67,17 @@
 <script>
   window.reservations = @json($reservations);
 </script>
+@if(session('success-payment'))
+    <script>
+        Toastify({
+            text: "{{ session('success-payment') }}",
+            duration: 3000,  // Duration in milliseconds
+            close: true,     // Show a close button
+            gravity: "top",  // Toast will appear at the top
+            position: "right",  // Position on the right
+            backgroundColor: "green",  // Change the background color to green for success
+            stopOnFocus: true
+        }).showToast();
+    </script>
+@endif
 @endsection

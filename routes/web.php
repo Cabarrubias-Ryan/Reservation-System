@@ -72,7 +72,7 @@ Route::middleware(['auth'])->group(function () {
   Route::get('/reservation', [ProfileController::class, 'reservation'])->name('profile-reservation');
   Route::post('/payment', [PaymentController::class, 'index'])->name('payment-view');
   Route::post('/payment/add', [PaymentController::class, 'payment'])->name('payment-add');
-  Route::post('/payment/add/success', [PaymentController::class, 'success'])->name('payment-success');
+  Route::get('/payment/add/success', [PaymentController::class, 'success'])->name('payment-success');
 });
 
 Route::middleware(['guest'])->group(function () {

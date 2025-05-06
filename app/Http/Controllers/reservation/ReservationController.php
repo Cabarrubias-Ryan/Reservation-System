@@ -15,7 +15,7 @@ class ReservationController extends Controller
     public function index()
     {
         Reservation::where('status', 0) // adjust status as needed
-            ->where('created_at', '<', Carbon::now()->subDays(2))
+            ->where('created_at', '<', Carbon::now()->subHours(2))
             ->whereNull('deleted_at')
             ->update([
                 'status' => 2,       // 0 = pending, 1 = approved, 2 = rejected, 3 = canceled
@@ -25,7 +25,6 @@ class ReservationController extends Controller
             ->where('status', 1)
             ->whereNull('reservation.deleted_at')
             ->get();
-
         return view('content.reservation.reservation', compact('reservations'));
     }
     public function store(Request $request)

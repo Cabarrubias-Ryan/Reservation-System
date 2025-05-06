@@ -30,6 +30,8 @@ $(document).ready(function () {
       return;
     }
 
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
     reservations.forEach(function (data) {
       const venueName = data.venue.name;
       const checkIn = data.check_in;
@@ -47,9 +49,15 @@ $(document).ready(function () {
         data.status == 1
           ? '<button class="btn btn-primary btn-sm">View</button>'
           : data.status == 0
-            ? '<button class="btn btn-primary btn-sm">View</button>'
+            ? `<form action="/payment" method="POST" id="paymentForm">
+                  <input type="hidden" name="_token" value="${csrfToken}">
+                  <input type="hidden" name="id" value="${data.reservation_id}">
+                  <button type="submit" class="btn btn-primary btn-sm" id="proceedToPaymentBtn">
+                    Payment
+                  </button>
+                </form>`
             : data.status == 2
-              ? '<button class="btn btn-primary btn-sm">View</button>'
+              ? '<button class="btn btn-primary btn-sm"> View</button>'
               : '';
 
       const row = `

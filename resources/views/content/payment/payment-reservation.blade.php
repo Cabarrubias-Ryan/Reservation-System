@@ -20,16 +20,24 @@
     <div class="col-md-10 col-lg-8">
       <div class="card shadow rounded p-4">
         <div class="mb-3">
-          <a href="{{ route('home') }}" class="btn btn-outline-secondary btn-sm">
-            ← Home
+          <a href="{{ route('profile-reservation') }}" class="btn btn-outline-secondary btn-sm">
+            ← Back
           </a>
         </div>
 
-        <h4 class="text-center mb-4">Payment Reservation</h4>
+
+
 
         <form method="POST" action="{{ route('payment-add') }}">
           @csrf
-          <div style="display:none;" id="VenueId"></div>
+          <input type="hidden" id="reservationId" name="reservationId">
+          <input type="hidden" id="VenueId" name="venueId">
+          <input type="hidden" id="priceRaw" name="priceRaw">
+          <input type="hidden" id="dayDifferenceRaw" name="dayDifferenceRaw">
+          <input type="hidden" id="totalPriceRaw" name="totalPriceRaw">
+          <input type="hidden" name="checkout" id="checkoutRaw">
+          <input type="hidden" name="checkin" id="checkinRaw">
+          <input type="hidden" name="venueName" id="venueName">
 
           <div class="mb-4">
             <div class="fw-bold">Name:

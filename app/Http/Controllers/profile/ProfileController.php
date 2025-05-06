@@ -18,7 +18,7 @@ class ProfileController extends Controller
     public function reservation(Request $request)
     {
       Reservation::where('status', 0) // adjust status as needed
-            ->where('created_at', '<', Carbon::now()->subDays(2))
+            ->where('created_at', '<', Carbon::now()->subHours(1))
             ->whereNull('deleted_at')
             ->update([
                 'status' => 2,       // 0 = pending, 1 = approved, 2 = rejected, 3 = canceled
@@ -27,6 +27,7 @@ class ProfileController extends Controller
             ->leftjoin('users', 'reservation.reserve_by', '=', 'users.id')
             ->where('users.id', auth()->user()->id)
             ->whereNull('reservation.deleted_at')
+            ->select('*', 'reservation.id as reservation_id')
             ->get();
 
       return view('content.user-profile.user-reservation', compact('reservations'));

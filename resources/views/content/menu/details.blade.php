@@ -245,7 +245,7 @@
       </div>
       <div class="modal-body">
         <div class="alert alert-info" role="alert">
-          <i class="ri-information-line me-2"></i> You can choose to pay now or later. If you choose to pay later, please remember to make the payment within 2 days to confirm your reservation. The first to pay will be the first to reserve the other will be cancel.
+          <i class="ri-information-line me-2"></i> You can choose to pay now or later. If you choose to pay later, please remember to make the payment within 1 hour to confirm your reservation. The first to pay will be the first to reserve the other will be cancel.
         </div>
         <h6>Would you like to make a payment now or later?</h6>
         <div class="d-flex justify-content-center">

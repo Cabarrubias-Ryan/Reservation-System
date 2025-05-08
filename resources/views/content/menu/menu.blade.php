@@ -220,25 +220,29 @@
             <div class="modal-body">
               <form id="filterData">
                 @csrf
-              <div class="row">
-                <div class="col mb-6 mt-2">
+              <div class="row g-4">
+                <label for="nameBasic mb-4">Available for reservation</label>
+                <div class="col mb-4 mt-4">
                   <div class="form-floating form-floating-outline">
-                    <input type="text" id="nameBasic" class="form-control" placeholder="Enter Name">
-                    <label for="nameBasic">Name</label>
+                    <input class="form-control" type="date" id="checkin-date" min="{{ date('Y-m-d') }}" />
+                    <label for="checkin-date">Start Date</label>
+                  </div>
+                </div>
+                <div class="col mb-4">
+                  <div class="form-floating form-floating-outline">
+                    <input class="form-control" type="date" id="checkout-date" min="{{ date('Y-m-d') }}" />
+                    <label for="checkout-date">End Date</label>
                   </div>
                 </div>
               </div>
-              <div class="row g-4">
-                <div class="col mb-2">
-                  <div class="form-floating form-floating-outline">
-                    <input type="email" id="emailBasic" class="form-control" placeholder="xxxx@xxx.xx">
-                    <label for="emailBasic">Email</label>
-                  </div>
-                </div>
-                <div class="col mb-2">
-                  <div class="form-floating form-floating-outline">
-                    <input type="date" id="dobBasic" class="form-control">
-                    <label for="dobBasic">DOB</label>
+              <div class="row">
+                <div class="row">
+                  <div class="col mb-6 mt-2">
+                    <div class="mb-4">
+                      <label for="formRange2" class="form-label">Price Range</label>
+                      <input type="range" class="form-range" min="{{ $pricesRange['min'] }}" max="{{ $pricesRange['max']}}" id="formRange2">
+                      <span id="rangeValue">0</span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -246,7 +250,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary" id="FilterBtn">Save changes</button>
+              <button type="button" id="filterBtn" class="btn btn-primary" id="FilterBtn">Save changes</button>
             </div>
           </div>
         </div>

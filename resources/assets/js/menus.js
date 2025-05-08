@@ -48,3 +48,26 @@ $(document).ready(function () {
     }
   });
 });
+
+$(document).ready(function () {
+  // Get the input range and the span element to display the value
+  const $rangeInput = $('#formRange2');
+  const $rangeValue = $('#rangeValue');
+
+  // Function to update the displayed value
+  function updateRangeValue() {
+    $rangeValue.text($rangeInput.val());
+  }
+
+  // Add event listener to update the value whenever the slider is moved
+  $rangeInput.on('input', updateRangeValue);
+
+  // Initialize the value when the page loads
+  updateRangeValue();
+});
+
+$(document).ready(function () {
+  $('body').on('click', '#filterBtn', function () {
+    console.log('Filter button clicked');
+  });
+});

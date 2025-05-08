@@ -14,7 +14,19 @@ class MenuController extends Controller
       $venues = Venue::with('picture')
       ->whereNull('deleted_at')
       ->get();
-      return view('content.menu.menu',compact('venues'));
+
+      $pricesRange = Venue::whereNull('deleted_at')
+      ->select('price')
+      ->get()
+      ->map(function ($venue) {
+          return [
+              'min' => Venue::min('price'),
+              'max' => Venue::max('price'),
+          ];
+      });
+      $pricesRange = $pricesRange->first();
+
+      return view('content.menu.menu',compact('venues', 'pricesRange'));
     }
     public function viewDetails($id){
       $venue = Venue::with('picture')
@@ -28,7 +40,7 @@ class MenuController extends Controller
         ->whereNull('reservation.deleted_at')
         ->get()->map(function ($data) {
               return [
-                  'title' => $data->firstname .' '.$data->lastname.' reservation date', // customize title
+                  'title' => 'Reserve', // customize title
                   'start' => date('Y-m-d', strtotime($data->check_in)),
                   'end'   => date('Y-m-d', strtotime($data->check_out . ' +1 day')), // optional +1 day for FullCalendar
               ];

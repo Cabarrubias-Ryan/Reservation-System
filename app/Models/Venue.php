@@ -28,4 +28,9 @@ class Venue extends Model
     {
         return $this->hasMany(Photo::class, 'venues_id');
     }
+    public function reservation()
+    {
+        return $this->hasMany(Reservation::class, 'venues_id');
+    }
+
 }

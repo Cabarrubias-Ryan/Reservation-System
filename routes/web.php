@@ -51,8 +51,10 @@ use App\Http\Controllers\authentications\RegisterBasic;
 use App\Http\Controllers\user_interface\TooltipsPopovers;
 use App\Http\Controllers\pages\AccountSettingsConnections;
 use App\Http\Controllers\reservation\ReservationController;
+use App\Http\Controllers\transaction\TransactionController;
 use App\Http\Controllers\pages\AccountSettingsNotifications;
 use App\Http\Controllers\authentications\ForgotPasswordBasic;
+use App\Http\Controllers\reports\ReservationReportsController;
 use App\Http\Controllers\user_interface\PaginationBreadcrumbs;
 
 
@@ -104,6 +106,9 @@ Route::middleware(['auth', 'user-access:Admin'])->group(function () {
   Route::get('/admin/reservation', [ReservationController::class, 'index'])->name('admin-reservation');
 
   Route::get('/admin/calendar', [CalendarController::class, 'index'])->name('admin-calendar');
+  Route::get('/admin/payments', [TransactionController::class, 'index'])->name('admin-payment');
+
+  Route::get('/admin/reports', [ReservationReportsController::class, 'index'])->name('admin-reports');
 
   Route::get('/pages/account-settings-account', [AccountSettingsAccount::class, 'index'])->name('pages-account-settings-account');
   Route::get('/pages/account-settings-notifications', [AccountSettingsNotifications::class, 'index'])->name('pages-account-settings-notifications');

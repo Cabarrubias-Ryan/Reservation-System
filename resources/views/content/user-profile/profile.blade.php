@@ -21,12 +21,6 @@
 
       <div class="row">
         <div class="col-md-12">
-          <div class="nav-align-top">
-            <ul class="nav nav-pills flex-column flex-md-row mb-6 gap-2 gap-lg-0">
-              <li class="nav-item"><a class="nav-link active" href="javascript:void(0);"><i class="ri-group-line me-1_5"></i>Account</a></li>
-              <li class="nav-item"><a class="nav-link" href="{{route('profile-reservation')}}"><i class="ri-reserved-line me-1_5"></i>Reservations</a></li>
-            </ul>
-          </div>
           <div class="card mb-6">
             <!-- Account -->
             <div class="card-body">

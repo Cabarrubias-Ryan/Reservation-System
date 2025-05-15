@@ -18,7 +18,7 @@
   <div class="position-relative">
     <div class="container p-5">
 
-      <nav aria-label="breadcrumb" class="mt-5">
+      <nav aria-label="breadcrumb" class="mt-2">
         <ol class="breadcrumb breadcrumb-style2">
           <li class="breadcrumb-item">
             <a href="{{ route('home')}}">Home</a>
@@ -43,9 +43,13 @@
               </div>
             </div>
             <div class="navbar-nav flex-row align-items-center ms-auto gap-5">
-              <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#FilterModal">
-                <span class="tf-icons ri-filter-line ri-16px me-1_5"></span>Filter
-              </button>
+              <div class="navbar-nav flex-row align-items-center ms-auto gap-5">
+               <div class="demo-inline-spacing">
+                <div class="btn-group">
+                  <button type="button" class="btn btn-primary btn-icon rounded dropdown-toggle hide-arrow" data-bs-toggle="modal" data-bs-target="#FilterModal"><i class="ri-filter-line"></i></button>
+                </div>
+              </div>
+            </div>
             </div>
           </header>
           <div class="nav-align-top mb-6">
@@ -218,39 +222,36 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              <form id="filterData">
-                @csrf
+              <form id="filterData" action="{{ route('home')}}" method="GET">
               <div class="row g-4">
                 <label for="nameBasic mb-4">Available for reservation</label>
                 <div class="col mb-4 mt-4">
                   <div class="form-floating form-floating-outline">
-                    <input class="form-control" type="date" id="checkin-date" min="{{ date('Y-m-d') }}" />
+                    <input class="form-control" type="date" name="start" id="start-date" min="{{ date('Y-m-d') }}" />
                     <label for="checkin-date">Start Date</label>
                   </div>
                 </div>
                 <div class="col mb-4">
                   <div class="form-floating form-floating-outline">
-                    <input class="form-control" type="date" id="checkout-date" min="{{ date('Y-m-d') }}" />
+                    <input class="form-control" type="date" name="end" id="end-date" min="{{ date('Y-m-d') }}" />
                     <label for="checkout-date">End Date</label>
                   </div>
                 </div>
               </div>
-              <div class="row">
-                <div class="row">
-                  <div class="col mb-6 mt-2">
-                    <div class="mb-4">
-                      <label for="formRange2" class="form-label">Price Range</label>
-                      <input type="range" class="form-range" min="{{ $pricesRange['min'] }}" max="{{ $pricesRange['max']}}" id="formRange2">
-                      <span id="rangeValue">0</span>
-                    </div>
-                  </div>
+              <div class="row mb-4">
+                <div class="col">
+                  <select class="form-select" name="filter">
+                    <option value="" selected>Price</option>
+                    <option value="highest">Price: Highest-Lowest</option>
+                    <option value="lowest">Price: Lowest-Highest</option>
+                  </select>
                 </div>
               </div>
+               <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="sumbit" id="filterBtn" class="btn btn-primary">Save changes</button>
+              </div>
             </form>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="button" id="filterBtn" class="btn btn-primary" id="FilterBtn">Save changes</button>
             </div>
           </div>
         </div>
@@ -260,10 +261,13 @@
 </div>
 @php
   $venues = collect($venues)->map(function($venue) {
+    $prices = is_array($venue->price) ? $venue->price : [$venue->price];
     return [
       'id' => $venue->id,
       'name' => $venue->name,
       'encrypted_id' => Crypt::encryptString($venue->id),
+      'min' => min($prices), // Min of prices array
+      'max' => max($prices)  // Max of prices array
     ];
   })->values()->toArray();
 @endphp

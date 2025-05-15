@@ -28,6 +28,7 @@ class ProfileController extends Controller
             ->where('users.id', auth()->user()->id)
             ->whereNull('reservation.deleted_at')
             ->select('*', 'reservation.id as reservation_id')
+            ->orderBy('reservation.updated_at', 'desc')
             ->get();
 
       return view('content.user-profile.user-reservation', compact('reservations'));

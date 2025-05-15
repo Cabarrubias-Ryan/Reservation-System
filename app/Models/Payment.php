@@ -10,6 +10,8 @@ class Payment extends Model
     protected $fillable = [
         'id',
         'payment_method',
+        'vouchers_code',
+        'amount_discount',
         'amount',
         'isCard',
         'created_at',

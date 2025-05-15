@@ -50,24 +50,38 @@ $(document).ready(function () {
 });
 
 $(document).ready(function () {
-  // Get the input range and the span element to display the value
-  const $rangeInput = $('#formRange2');
-  const $rangeValue = $('#rangeValue');
+  $('#filterBtn').on('click', function () {
+    const checkinDate = $('#start-date').val();
+    const checkoutDate = $('#end-date').val();
+    const checkin = new Date(checkinDate);
+    const checkout = new Date(checkoutDate);
+    const now = Date.now();
 
-  // Function to update the displayed value
-  function updateRangeValue() {
-    $rangeValue.text($rangeInput.val());
-  }
-
-  // Add event listener to update the value whenever the slider is moved
-  $rangeInput.on('input', updateRangeValue);
-
-  // Initialize the value when the page loads
-  updateRangeValue();
-});
-
-$(document).ready(function () {
-  $('body').on('click', '#filterBtn', function () {
-    console.log('Filter button clicked');
+    if (checkin < now && checkout < now) {
+      Toastify({
+        text: "Oops! You can't travel back in time — pick future dates!",
+        duration: 3000,
+        close: true,
+        gravity: 'top', // top or bottom
+        position: 'right', // left, center or right
+        backgroundColor: '#cc3300',
+        stopOnFocus: true
+      }).showToast();
+      event.preventDefault();
+      return;
+    }
+    if (checkin >= checkout) {
+      Toastify({
+        text: 'Check-in date cannot be later than or equal check-out date.',
+        duration: 3000,
+        close: true,
+        gravity: 'top', // top or bottom
+        position: 'right', // left, center or right
+        backgroundColor: '#cc3300',
+        stopOnFocus: true
+      }).showToast();
+      event.preventDefault();
+      return;
+    }
   });
 });

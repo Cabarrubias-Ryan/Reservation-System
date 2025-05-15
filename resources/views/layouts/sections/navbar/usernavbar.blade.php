@@ -38,6 +38,7 @@
               </a>
               <ul class="dropdown-menu dropdown-menu-end mt-3 py-2">
                 @auth
+
                 <li>
                   <a class="dropdown-item" href="{{ route('profile')}}">
                     <div class="d-flex align-items-center">
@@ -47,7 +48,11 @@
                         </div>
                       </div>
                       <div class="flex-grow-1">
-                        <h6 class="mb-0 small">John Doe</h6>
+                        <h6 class="mb-0 small">
+                          {{ Auth::user()->firstname }}
+                          {{ Auth::user()->middlename ?? '' }}
+                          {{ Auth::user()->lastname }}
+                        </h6>
                         <small class="text-muted">User</small>
                       </div>
                     </div>
@@ -73,11 +78,10 @@
                 </li>
                 @auth
                 <li>
-                  <a class="dropdown-item" href="javascript:void(0);">
+                  <a class="dropdown-item" href="{{route('profile-reservation')}}">
                     <span class="d-flex align-items-center align-middle">
                       <i class="flex-shrink-0 ri-file-text-line ri-22px me-3"></i>
                       <span class="flex-grow-1 align-middle">Billing</span>
-                      <span class="flex-shrink-0 badge badge-center rounded-pill bg-danger h-px-20 d-flex align-items-center justify-content-center">4</span>
                     </span>
                   </a>
                 </li>
@@ -85,12 +89,6 @@
                   <a class="dropdown-item" href="javascript:void(0);">
                     <i class='ri-gift-line ri-22px me-2'></i>
                     <span class="align-middle">Gift card</span>
-                  </a>
-                </li>
-                <li>
-                  <a class="dropdown-item" href="javascript:void(0);">
-                    <i class='ri-question-mark ri-22px me-2'></i>
-                    <span class="align-middle">Help</span>
                   </a>
                 </li>
                 <li>
@@ -106,12 +104,6 @@
                 </li>
                 @endauth
                 @guest
-                <li>
-                  <a class="dropdown-item" href="javascript:void(0);">
-                    <i class='ri-gift-line ri-22px me-2'></i>
-                    <span class="align-middle">Gift card</span>
-                  </a>
-                </li>
                 <li>
                   <a class="dropdown-item" href="javascript:void(0);">
                     <i class='ri-question-mark ri-22px me-2'></i>

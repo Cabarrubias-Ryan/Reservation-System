@@ -41,6 +41,7 @@ class PaymentController extends Controller
         $response = $stripe->checkout->sessions->create([
             'success_url' => $success_url,
             'cancel_url' => $cancel_url,
+            'payment_method_types' => ['card'],
             'line_items' => [
                 [
                     'price_data' => [

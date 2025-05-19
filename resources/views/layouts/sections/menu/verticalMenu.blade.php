@@ -1,4 +1,4 @@
-<aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+<aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme border border-left-1">
 
   <!-- ! Hide app brand if navbar-full -->
   <div class="app-brand demo">

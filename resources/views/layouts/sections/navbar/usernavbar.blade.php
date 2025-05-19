@@ -81,14 +81,14 @@
                   <a class="dropdown-item" href="{{route('profile-reservation')}}">
                     <span class="d-flex align-items-center align-middle">
                       <i class="flex-shrink-0 ri-file-text-line ri-22px me-3"></i>
-                      <span class="flex-grow-1 align-middle">Billing</span>
+                      <span class="flex-grow-1 align-middle">Reservations</span>
                     </span>
                   </a>
                 </li>
                 <li>
-                  <a class="dropdown-item" href="javascript:void(0);">
+                  <a class="dropdown-item" href="{{ route('vouchers-list')}}">
                     <i class='ri-gift-line ri-22px me-2'></i>
-                    <span class="align-middle">Gift card</span>
+                    <span class="align-middle">Voucher</span>
                   </a>
                 </li>
                 <li>

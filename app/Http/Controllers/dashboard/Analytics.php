@@ -18,7 +18,7 @@ class Analytics extends Controller
             ->limit(8)
             ->get();
     $payment = Payment::orderBy('created_at', 'Desc')
-            ->limit(6)
+            ->limit(3)
             ->get();
     $amount = Payment::sum('amount');
     return view('content.dashboard.dashboards-analytics', compact('reservations','payment', 'amount'));

@@ -35,6 +35,7 @@ use App\Http\Controllers\product\ProductController;
 use App\Http\Controllers\profile\ProfileController;
 use App\Http\Controllers\user_interface\ListGroups;
 use App\Http\Controllers\user_interface\Typography;
+use App\Http\Controllers\voucher\VoucherController;
 use App\Http\Controllers\authentications\LoginBasic;
 use App\Http\Controllers\pages\MiscUnderMaintenance;
 use App\Http\Controllers\calendar\CalendarController;
@@ -42,11 +43,11 @@ use App\Http\Controllers\form_layouts\HorizontalForm;
 use App\Http\Controllers\tables\Basic as TablesBasic;
 use App\Http\Controllers\authentications\RegisterUser;
 use App\Http\Controllers\extended_ui\PerfectScrollbar;
-use App\Http\Controllers\pages\AccountSettingsAccount;
 
 
 
 // New import Controller
+use App\Http\Controllers\pages\AccountSettingsAccount;
 use App\Http\Controllers\authentications\RegisterBasic;
 use App\Http\Controllers\user_interface\TooltipsPopovers;
 use App\Http\Controllers\pages\AccountSettingsConnections;
@@ -70,11 +71,22 @@ Route::post('/venue/search', [MenuController::class, 'search'])->name('search');
 
 Route::middleware(['auth'])->group(function () {
   Route::post('/reservation/add', [ReservationController::class, 'store'])->name('reservation-add');
+
   Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
+
   Route::get('/reservation', [ProfileController::class, 'reservation'])->name('profile-reservation');
+
+  Route::get('/vouchers-List', [VoucherController::class, 'display'])->name('vouchers-list');
+  Route::post('/vouchers-List/add', [VoucherController::class, 'addVouchers'])->name('vouchers-add');
+  Route::get('/My-vouchers', [VoucherController::class, 'myVouchersList'])->name('myVoucher');
+
+
+
   Route::post('/payment', [PaymentController::class, 'index'])->name('payment-view');
   Route::post('/payment/add', [PaymentController::class, 'payment'])->name('payment-add');
   Route::get('/payment/add/success', [PaymentController::class, 'success'])->name('payment-success');
+  Route::post('/payment/receipt', [PaymentController::class, 'generateReceipt'])->name('payment.receipt');
+
 });
 
 Route::middleware(['guest'])->group(function () {
@@ -108,12 +120,17 @@ Route::middleware(['auth', 'user-access:Admin'])->group(function () {
   Route::get('/admin/calendar', [CalendarController::class, 'index'])->name('admin-calendar');
   Route::get('/admin/payments', [TransactionController::class, 'index'])->name('admin-payment');
 
-  Route::get('/admin/reports', [ReservationReportsController::class, 'index'])->name('admin-reports');
+  Route::get('/reports/reservation', [ReservationReportsController::class, 'index'])->name('admin-reports');
 
-  Route::get('/pages/account-settings-account', [AccountSettingsAccount::class, 'index'])->name('pages-account-settings-account');
-  Route::get('/pages/account-settings-notifications', [AccountSettingsNotifications::class, 'index'])->name('pages-account-settings-notifications');
-  Route::get('/pages/account-settings-connections', [AccountSettingsConnections::class, 'index'])->name('pages-account-settings-connections');
+  Route::get('/admin/account-settings-account', [AccountSettingsAccount::class, 'index'])->name('pages-account-settings-account');
+
+
+  Route::get('/admin/vouchers-reports', [VoucherController::class, 'index'])->name('admin-vouchers');
+  Route::post('/admin/vouchers-reports/add', [VoucherController::class, 'store'])->name('admin-vouchers-add');
+  Route::post('/admin/vouchers-reports/update', [VoucherController::class, 'update'])->name('admin-vouchers-update');
+  Route::post('/admin/vouchers-reports/delete', [VoucherController::class, 'delete'])->name('admin-vouchers-delete');
 });
+
 
 
 

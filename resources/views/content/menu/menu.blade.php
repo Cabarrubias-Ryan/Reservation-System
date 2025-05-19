@@ -18,7 +18,7 @@
   <div class="position-relative">
     <div class="container p-5">
 
-      <nav aria-label="breadcrumb" class="mt-2">
+      <nav aria-label="breadcrumb" class="mt-1">
         <ol class="breadcrumb breadcrumb-style2">
           <li class="breadcrumb-item">
             <a href="{{ route('home')}}">Home</a>
@@ -249,7 +249,7 @@
               </div>
                <div class="modal-footer">
                 <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="sumbit" id="filterBtn" class="btn btn-primary">Save changes</button>
+                <button type="sumbit" id="filterBtn" class="btn btn-primary">Filter</button>
               </div>
             </form>
             </div>

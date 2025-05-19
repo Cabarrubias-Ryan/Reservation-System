@@ -60,11 +60,28 @@
         <div class="row justify-content-between mt-5">
           <!-- Left side: Badges -->
           <div class="col-md-6 col-lg-5">
-            <div class="mb-5 d-flex flex-wrap gap-2">
+            <div class="mb-5 d-flex flex-wrap gap-3">
               <span class="badge bg-label-primary">Free Wi-Fi</span>
               <span class="badge bg-label-primary">Free Parking</span>
               <span class="badge bg-label-primary">Swimming Pool</span>
               <span class="badge bg-label-primary">Gym</span>
+              <span class="badge bg-label-primary">Free Soap</span>
+              <span class="badge bg-label-primary">Free Towels</span>
+              <span class="badge bg-label-primary">Free Tissues</span>
+              <span class="badge bg-label-primary">Shower Cap</span>
+              <span class="badge bg-label-primary">Complimentary Toiletries</span>
+              <span class="badge bg-label-primary">Free Breakfast</span>
+              <span class="badge bg-label-primary">Air Conditioning</span>
+              <span class="badge bg-label-primary">Room Service</span>
+              <span class="badge bg-label-primary">Hair Dryer</span>
+              <span class="badge bg-label-primary">Iron and Ironing Board</span>
+              <span class="badge bg-label-primary">Laundry Service</span>
+              <span class="badge bg-label-primary">Safety Deposit Box</span>
+              <span class="badge bg-label-primary">TV with Cable Channels</span>
+              <span class="badge bg-label-primary">Coffee/Tea Maker</span>
+              <span class="badge bg-label-primary">Electric Kettle</span>
+              <span class="badge bg-label-primary">Pet-Friendly</span>
+              <span class="badge bg-label-primary">Free Shuttle Service</span>
             </div>
           </div>
 

@@ -47,17 +47,29 @@ $(document).ready(function () {
               : '';
       const view =
         data.status == 1
-          ? '<button class="btn btn-primary btn-sm">View</button>'
+          ? `<form action="/payment/receipt" method="POST" id="paymentForm" target="_blank">
+                <input type="hidden" name="_token" value="${csrfToken}">
+                <input type="hidden" name="id" value="${data.reservation_id}">
+
+                <!-- Hidden submit button -->
+                <button type="submit" style="display: none;"></button>
+
+                <!-- View button, styled as a link -->
+                <a href="javascript:void(0);" class="btn btn-primary btn-sm" onclick="document.getElementById('paymentForm').submit();">
+                    View
+                </a>
+            </form>
+            `
           : data.status == 0
             ? `<form action="/payment" method="POST" id="paymentForm">
                   <input type="hidden" name="_token" value="${csrfToken}">
                   <input type="hidden" name="id" value="${data.reservation_id}">
                   <button type="submit" class="btn btn-primary btn-sm" id="proceedToPaymentBtn">
-                    Payment
+                    Pay
                   </button>
                 </form>`
             : data.status == 2
-              ? '<button class="btn btn-primary btn-sm"> View</button>'
+              ? '<button class="btn btn-primary btn-sm" disabled> Pay</button>'
               : '';
 
       const row = `

@@ -11,7 +11,7 @@ $(document).ready(function () {
   // Function to filter reservations by venue name
   function filterReservations(query) {
     const filtered = allReservations.filter(function (payments) {
-      return payments.firstname.toLowerCase().includes(query) || payments.lastname.toLowerCase().includes(query);
+      return payments.payment_code.toLowerCase().includes(query);
     });
     displayReservations(filtered);
   }
@@ -24,7 +24,7 @@ $(document).ready(function () {
     if (payments.length === 0) {
       $tbody.append(`
         <tr>
-          <td colspan="6" class="text-center text-muted">No reservations found.</td>
+          <td colspan="6" class="text-center text-muted">No payments found.</td>
         </tr>
       `);
       return;
@@ -35,7 +35,16 @@ $(document).ready(function () {
       const amount = parseFloat(data.amount).toFixed(2);
 
       const dateObj = new Date(data.created_at);
+      let code = data.vouchers_code;
+      let discount = data.discount + '% off';
 
+      if (data.vouchers_code == null) {
+        code = '';
+      }
+
+      if (data.discount == null) {
+        discount = '';
+      }
       // Format the date to 'DD MMM YYYY' (you can change the format as needed)
       const formattedDate = dateObj.toLocaleDateString('en-GB', {
         // 'en-GB' gives DD/MM/YYYY format
@@ -49,8 +58,10 @@ $(document).ready(function () {
       const row = `
         <tr>
           <td><span>${fullName}</span></td>
-          <td>Stripe</td>
+          <td>${data.payment_code}</td>
           <td>₱ ${amount}</td>
+          <td>${discount}</td>
+          <td>${code}</td>
           <td>${formattedDate}</td>
           <td>${statusBadge}</td>
       `;

@@ -143,7 +143,4 @@ class ProductController extends Controller
       return response()->json(['Error' => 0, 'Message' => 'Successfully update a data']);
     }
   }
-  public function filter(Request $request){
-    return response()->json(['Error' => 0, 'Message' => 'Successfully added a data']);
-  }
 }

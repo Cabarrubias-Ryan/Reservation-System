@@ -345,12 +345,12 @@
         </div>
       </div>
       <div class="card-body">
-        <h6 class="mb-1">Total Earnings</h6>
-        <div class="d-flex flex-wrap mb-1 align-items-center">
+        <h6 class="mb-1 mt-5">Total Earnings</h6>
+        <div class="d-flex flex-wrap mb-5 align-items-center">
           <h4 class="mb-0 me-2">₱{{ number_format($amount, 2)}}</h4>
           <p class="text-success mb-0">+42%</p>
         </div>
-        <div>
+        <div class="mt-5">
           <ul class="p-0 m-0">
             <li class="d-flex mb-6">
             <div class="avatar flex-shrink-0 bg-lightest rounded me-3">

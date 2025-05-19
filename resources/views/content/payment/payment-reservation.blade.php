@@ -25,9 +25,6 @@
           </a>
         </div>
 
-
-
-
         <form method="POST" action="{{ route('payment-add') }}">
           @csrf
           <input type="hidden" id="reservationId" name="reservationId">
@@ -72,7 +69,25 @@
 
           <div class="mb-4 row">
             <label class="col-sm-4 fw-bold">Total Price:</label>
-            <div class="col-sm-8" id="totalPrice"></div>
+            <div class="col-sm-8">
+              <span id="totalPrice"></span>
+              <div class="d-flex align-items-center gap-4">
+                <small id="originalPrice" class="text-muted d-block text-decoration-line-through"></small>
+                <div id="discountBadge" class="mt-2 d-inline-block"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-4 mt-5 row">
+            <label class="col-sm-4 fw-bold">Voucher:</label>
+            <div>
+              <select class="form-select col-sm-8" id="discount" name="discount" aria-label="Default select example">
+                  <option value="" selected disabled>--Select Voucher---</option>
+                  @foreach ($voucher as $item)
+                      <option value="{{ $item->id }}" data-discount="{{ $item->discount }}" data-min="{{ $item->requirements}}" class="discount">{{ $item->name }} - {{ $item->discount }}% off</option>
+                  @endforeach
+              </select>
+            </div>
           </div>
 
           <div class="text-center">

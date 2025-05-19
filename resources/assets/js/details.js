@@ -261,9 +261,9 @@ document.addEventListener('DOMContentLoaded', function () {
     eventColor: '#3C0061', // default color
     events: window.reservations.map(event => {
       const currentDate = new Date();
-      const eventStartDate = new Date(event.start);
+      const eventendDate = new Date(event.end);
 
-      if (eventStartDate < currentDate) {
+      if (eventendDate < currentDate) {
         event.title = 'Complete';
       }
       return event;

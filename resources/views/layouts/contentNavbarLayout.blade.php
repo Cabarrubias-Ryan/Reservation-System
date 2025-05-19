@@ -3,7 +3,7 @@
 @php
 /* Display elements */
 $contentNavbar = true;
-$containerNav = ($containerNav ?? 'container-xxl');
+$containerNav = ($containerNav ?? 'container-fluid');
 $isNavbar = ($isNavbar ?? true);
 $isMenu = ($isMenu ?? true);
 $isFlex = ($isFlex ?? false);
@@ -13,7 +13,7 @@ $isFooter = ($isFooter ?? true);
 $navbarDetached = 'navbar-detached';
 
 /* Content classes */
-$container = ($container ?? 'container-xxl');
+$container = ($container ?? 'container-fluid');
 
 @endphp
 

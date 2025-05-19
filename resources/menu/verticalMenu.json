@@ -8,7 +8,7 @@
     },
     {
       "url": "admin/product",
-      "name": "Product",
+      "name": "Facilities",
       "icon": "menu-icon tf-icons ri-box-3-line",
       "slug": "admin-product"
     },
@@ -40,24 +40,19 @@
       "url": "admin/payments"
     },
     {
+      "name": "Vouchers",
+      "icon": "menu-icon tf-icons ri-discount-percent-line",
+      "slug": "admin-vouchers",
+      "url": "admin/vouchers-reports"
+    },
+    {
       "menuHeader": "System Reports"
     },
     {
-      "name": "Reports",
+      "name": "Reports Reservation",
       "icon": "menu-icon tf-icons ri-file-paper-2-line",
-      "slug": "admin",
-      "submenu": [
-        {
-          "url": "admin/reports",
-          "name": "Reservation Reports",
-          "slug": "admin-reports"
-        },
-        {
-          "url": "forms/input-groups",
-          "name": "Sales Reports",
-          "slug": "forms-input-groups"
-        }
-      ]
+      "slug": "admin-reports",
+      "url": "reports/reservation"
     }
   ]
 }

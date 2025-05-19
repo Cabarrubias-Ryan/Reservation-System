@@ -1,6 +1,6 @@
 @extends('layouts/contentNavbarLayout')
 
-@section('title', 'Products')
+@section('title', 'Facilities')
 
 @section('page-script')
 @vite('resources/assets/js/product.js')

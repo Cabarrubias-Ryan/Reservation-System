@@ -24,6 +24,7 @@ class ReservationController extends Controller
             ->leftjoin('users', 'reservation.reserve_by', '=', 'users.id')
             ->where('status', 1)
             ->whereNull('reservation.deleted_at')
+            ->orderBy('reservation.created_at', 'desc')
             ->get();
         return view('content.reservation.reservation', compact('reservations'));
     }

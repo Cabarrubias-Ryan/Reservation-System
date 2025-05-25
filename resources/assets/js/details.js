@@ -85,6 +85,29 @@ $(document).ready(function () {
       event.preventDefault();
       return;
     } else {
+      const isConflict = window.reservations.some(reservation => {
+        const reservedStart = new Date(reservation.start);
+        const reservedEnd = new Date(reservation.end);
+
+        return checkin < reservedEnd && checkout > reservedStart;
+      });
+
+      if (isConflict) {
+        Toastify({
+          text: 'Oops! These dates are already reserved. Please choose different dates.',
+          duration: 3000,
+          close: true,
+          gravity: 'top',
+          position: 'right',
+          backgroundColor: '#cc3300',
+          stopOnFocus: true
+        }).showToast();
+        event.preventDefault();
+        return;
+      }
+
+      event.preventDefault();
+
       const timeDifference = checkout - checkin;
       const dayDifference = timeDifference / (1000 * 3600 * 24); // Convert milliseconds to days
       const totalPrice = dayDifference * price;

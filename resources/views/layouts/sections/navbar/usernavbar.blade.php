@@ -105,7 +105,7 @@
                 @endauth
                 @guest
                 <li>
-                  <a class="dropdown-item" href="javascript:void(0);">
+                  <a class="dropdown-item" href="{{ route('pages-misc-under-maintenance') }}">
                     <i class='ri-question-mark ri-22px me-2'></i>
                     <span class="align-middle">Help</span>
                   </a>

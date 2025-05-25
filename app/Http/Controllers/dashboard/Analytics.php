@@ -11,6 +11,7 @@ class Analytics extends Controller
 {
   public function index()
   {
+    $amountReservation = Payment::orderBy('created_at', 'Desc')->get();
     $reservations = Reservation::with('venue')
             ->leftjoin('users', 'reservation.reserve_by', '=', 'users.id')
             ->whereNull('reservation.deleted_at')
@@ -21,6 +22,6 @@ class Analytics extends Controller
             ->limit(3)
             ->get();
     $amount = Payment::sum('amount');
-    return view('content.dashboard.dashboards-analytics', compact('reservations','payment', 'amount'));
+    return view('content.dashboard.dashboards-analytics', compact('reservations','payment', 'amount', 'amountReservation'));
   }
 }

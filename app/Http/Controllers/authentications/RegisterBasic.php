@@ -32,7 +32,7 @@ class RegisterBasic extends Controller
       'firstname' => $request->firstname,
       'middlename' => $request->middlename,
       'lastname' => $request->lastname,
-      'role' => 'Admin',
+      'role' => $request->role,
       'username' => $request->username,
       'email' => $request->email,
       'password' => bcrypt($request->password),
@@ -63,6 +63,7 @@ class RegisterBasic extends Controller
       'lastname' => $request->lastname,
       'username' => $request->username,
       'email' => $request->email,
+      'role' => $request->role,
     ];
 
     $resultUser = User::where('id', Crypt::decryptString($request->id))->update($userData);

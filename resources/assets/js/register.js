@@ -90,6 +90,7 @@ $(document).ready(function () {
       { id: 'firstname', label: 'Firstname' },
       { id: 'lastname', label: 'Lastname' },
       { id: 'email', label: 'Email' },
+      { id: 'role', label: 'Role' },
       { id: 'terms-conditions', label: 'Terms and Condition' }
     ];
     const passwords = [
@@ -148,6 +149,7 @@ $(document).ready(function () {
     const lastname = $(this).data('lastname');
     const username = $(this).data('username');
     const email = $(this).data('email');
+    const role = $(this).data('role');
 
     $('#Edit_id').val(id);
     $('#Edit_firstname').val(firstname);
@@ -155,6 +157,7 @@ $(document).ready(function () {
     $('#Edit_lastname').val(lastname);
     $('#Edit_username').val(username);
     $('#Edit_email').val(email);
+    $('#Edit_role').val(role);
   });
 
   $('body').on('click', '#SaveEditBtn', function (event) {
@@ -162,7 +165,8 @@ $(document).ready(function () {
       { id: 'Edit_firstname', label: 'Firstname' },
       { id: 'Edit_lastname', label: 'Lastname' },
       { id: 'Edit_username', label: 'Username' },
-      { id: 'Edit_email', label: 'Email' }
+      { id: 'Edit_email', label: 'Email' },
+      { id: 'Edit_role', label: 'Role' }
     ];
 
     const isValid = validateForm(fields);
@@ -288,7 +292,9 @@ $(document).ready(function () {
                   data-middlename="${user.middlename}"
                   data-lastname="${user.lastname}"
                   data-username="${user.username}"
-                  data-email="${user.email}">
+                  data-email="${user.email}"
+                  data-role="${user.role}"
+                  >
                   <i class="ri-pencil-line me-1"></i> Edit
                 </a>
                 <a class="dropdown-item DeleteBtn" href="javascript:void(0);" data-id="${user.encrypted_id}">

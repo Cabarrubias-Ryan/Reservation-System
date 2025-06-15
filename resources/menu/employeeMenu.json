@@ -1,0 +1,40 @@
+{
+  "menu": [
+    {
+      "url": "admin/analytics",
+      "name": "Dashboards",
+      "icon": "menu-icon tf-icons ri-home-smile-line",
+      "slug": "dashboard-analytics"
+    },
+    {
+      "url": "admin/calendar",
+      "name": "Calendar",
+      "icon": "menu-icon tf-icons ri-calendar-event-line",
+      "slug": "admin-calendar"
+    },
+    {
+      "menuHeader": "Components"
+    },
+    {
+      "url": "admin/reservation",
+      "name": "Reservation",
+      "icon": "menu-icon tf-icons ri-booklet-line",
+      "slug": "admin-reservation"
+    },
+    {
+      "name": "Payments",
+      "icon": "menu-icon tf-icons ri-bank-card-2-line",
+      "slug": "admin-payment",
+      "url": "admin/payments"
+    },
+    {
+      "menuHeader": "System Reports"
+    },
+    {
+      "name": "Reports Reservation",
+      "icon": "menu-icon tf-icons ri-file-paper-2-line",
+      "slug": "admin-reports",
+      "url": "reports/reservation"
+    }
+  ]
+}

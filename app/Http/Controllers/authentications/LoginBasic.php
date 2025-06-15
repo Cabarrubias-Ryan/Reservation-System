@@ -38,7 +38,7 @@ class LoginBasic extends Controller
     $resultLogs = Log::create($logData);
     Auth::login($account);
 
-    if(Auth::user()->role == 'Admin'){
+    if(Auth::user()->role == 'Admin' || Auth::user()->role == 'Employee'){
       return response()->json(['Error' => 0, 'Message' => 'Successfully login', 'Redirect' => route('dashboard-analytics')]);
     }
     if(Auth::user()->role == 'User'){
@@ -122,7 +122,7 @@ class LoginBasic extends Controller
         Auth::login($newUser);
     }
 
-    if (Auth::user()->role === 'Admin') {
+    if (Auth::user()->role === 'Admin' || Auth::user()->role === 'Employee') {
       return redirect('/admin/analytics')->with('login_success', 'You have successfully logged in.');
     }
 

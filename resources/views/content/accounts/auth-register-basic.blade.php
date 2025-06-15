@@ -77,6 +77,15 @@
               <input type="text" class="form-control" id="email" name="email" placeholder="Enter your email">
               <label for="email">Email</label>
             </div>
+            <div class="form-floating form-floating-outline mb-6">
+              <select class="form-select" id="role" name="role" aria-label="Default select example">
+                <option value="" selected disabled>Select Role</option>
+                <option value="Admin">Admin</option>
+                <option value="Employee">Employee</option>
+                <option value="User">User</option>
+              </select>
+              <label for="exampleFormControlSelect1">Role</label>
+            </div>
             <div class="mb-5 form-password-toggle">
               <div class="input-group input-group-merge">
                 <div class="form-floating form-floating-outline">
@@ -159,6 +168,15 @@
               <input type="text" class="form-control" id="Edit_email" name="email" placeholder="Enter your email">
               <label for="email">Email</label>
             </div>
+            <div class="form-floating form-floating-outline mb-6">
+              <select class="form-select" id="Edit_role" name="role" aria-label="Default select example">
+                <option value="" selected disabled>Select Role</option>
+                <option value="Admin">Admin</option>
+                <option value="Employee">Employee</option>
+                <option value="User">User</option>
+              </select>
+              <label for="Edit_role">Role</label>
+            </div>
 
           </form>
         </div>
@@ -179,6 +197,7 @@
       'lastname' => $user->lastname,
       'username' => $user->username,
       'email' => $user->email,
+      'role' => $user->role,
   ];
   })->values()->toArray();
 @endphp
